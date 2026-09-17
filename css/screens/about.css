@@ -1,0 +1,87 @@
+/* ==========================================================================
+   PravahAi Screen: About & System Documentation View
+   Problem statement, edge-AI innovation, team credits, prototype badge
+   ========================================================================== */
+
+.about-page-container {
+  max-width: 960px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+}
+
+.about-hero-box {
+  padding: var(--space-8) var(--space-6);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.about-definition-text {
+  font-size: var(--text-lg);
+  font-weight: 600;
+  color: var(--accent-deep);
+  line-height: 1.5;
+  max-width: 780px;
+}
+
+.about-section-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-6);
+}
+
+@media (min-width: 768px) {
+  .about-section-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.about-content-card {
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.about-content-card h3 {
+  font-size: var(--text-lg);
+  font-weight: 800;
+  color: var(--text-main);
+  letter-spacing: -0.01em;
+}
+
+.about-content-card p {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.team-credits-card {
+  padding: var(--space-6);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.team-tags-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+.team-badge {
+  padding: 6px 16px;
+  border-radius: var(--radius-full);
+  background: rgba(30, 167, 219, 0.12);
+  border: 1px solid var(--glass-border);
+  color: var(--accent-deep);
+  font-size: var(--text-xs);
+  font-weight: 700;
+}

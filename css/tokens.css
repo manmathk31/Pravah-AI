@@ -1,0 +1,126 @@
+/* ==========================================================================
+   PravahAi Design Tokens — Light Blue Water & Glassmorphism
+   Mobile-first, fluid clamp scales, accessible contrast ratios
+   ========================================================================== */
+
+:root {
+  /* Color Palette: Water & Sky Gradient Foundation */
+  --bg-gradient-start: #f0f8fd;
+  --bg-gradient-mid: #d9eef8;
+  --bg-gradient-end: #c4e5f4;
+  --bg-mesh-1: rgba(30, 167, 219, 0.18);
+  --bg-mesh-2: rgba(127, 220, 235, 0.25);
+  --bg-mesh-3: rgba(10, 110, 168, 0.12);
+
+  /* Primary Brand Accents */
+  --accent-primary: #1ea7db;
+  --accent-deep: #0a6ea8;
+  --accent-foam: #7fdceb;
+  --accent-foam-subtle: rgba(127, 220, 235, 0.18);
+  --accent-glow: rgba(30, 167, 219, 0.25);
+  --accent-hover: #1693c4;
+
+  /* Status Colors (Soft glow & pill treatments, accessible contrast) */
+  --status-safe: #22a760;
+  --status-safe-glow: rgba(34, 167, 96, 0.25);
+  --status-safe-bg: rgba(34, 167, 96, 0.12);
+  --status-safe-border: rgba(34, 167, 96, 0.35);
+
+  --status-risk: #e08b00;
+  --status-risk-glow: rgba(224, 139, 0, 0.28);
+  --status-risk-bg: rgba(224, 139, 0, 0.14);
+  --status-risk-border: rgba(224, 139, 0, 0.35);
+
+  --status-unsafe: #d9383e;
+  --status-unsafe-glow: rgba(217, 56, 62, 0.32);
+  --status-unsafe-bg: rgba(217, 56, 62, 0.14);
+  --status-unsafe-border: rgba(217, 56, 62, 0.4);
+
+  /* LoRa Offline Mode Overrides */
+  --lora-accent: #e67e22;
+  --lora-accent-glow: rgba(230, 126, 34, 0.3);
+  --lora-banner-bg: #2d3748;
+  --lora-banner-text: #f7fafc;
+
+  /* High Contrast Typography */
+  --text-main: #0c1f2e;          /* Minimum 6.5:1 contrast over glass */
+  --text-secondary: #243e52;     /* Minimum 4.8:1 contrast over glass */
+  --text-muted: #48667c;         /* Readable captions */
+  --text-on-accent: #ffffff;
+
+  /* Glass Surface Tokens */
+  --glass-bg: rgba(255, 255, 255, 0.62);
+  --glass-bg-subtle: rgba(255, 255, 255, 0.42);
+  --glass-bg-elevated: rgba(255, 255, 255, 0.78);
+  --glass-border: rgba(255, 255, 255, 0.75);
+  --glass-border-subtle: rgba(255, 255, 255, 0.45);
+  --glass-highlight: inset 0 1px 1px 0 rgba(255, 255, 255, 0.9);
+  --glass-blur: 20px;
+  --glass-blur-mobile: 12px;
+
+  /* Layered Ambient Shadows */
+  --shadow-sm: 0 2px 8px rgba(10, 110, 168, 0.08);
+  --shadow-md: 0 6px 20px rgba(10, 110, 168, 0.1), 0 2px 4px rgba(0, 0, 0, 0.04);
+  --shadow-lg: 0 14px 34px rgba(10, 110, 168, 0.14), 0 3px 8px rgba(0, 0, 0, 0.06);
+  --shadow-glow: 0 0 24px rgba(30, 167, 219, 0.3);
+  --shadow-floating: 0 20px 40px rgba(10, 80, 130, 0.18), 0 4px 10px rgba(0, 0, 0, 0.05);
+
+  /* Corner Radius (Tightened for mobile, generous for desktop) */
+  --radius-xs: 8px;
+  --radius-sm: 12px;
+  --radius-md: 18px;
+  --radius-lg: 24px;
+  --radius-xl: 32px;
+  --radius-full: 9999px;
+
+  /* Fluid Typography Scales */
+  --font-family-base: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, sans-serif;
+  --font-family-mono: 'JetBrains Mono', 'SF Mono', Consolas, monospace;
+
+  --text-xs: clamp(0.72rem, 0.68rem + 0.2vw, 0.8rem);
+  --text-sm: clamp(0.82rem, 0.78rem + 0.25vw, 0.92rem);
+  --text-base: clamp(0.94rem, 0.90rem + 0.2vw, 1.05rem);
+  --text-lg: clamp(1.10rem, 1.02rem + 0.4vw, 1.25rem);
+  --text-xl: clamp(1.25rem, 1.15rem + 0.6vw, 1.55rem);
+  --text-2xl: clamp(1.50rem, 1.35rem + 0.9vw, 1.95rem);
+  --text-3xl: clamp(1.85rem, 1.60rem + 1.4vw, 2.55rem);
+  --text-hero: clamp(2.20rem, 1.80rem + 2.2vw, 3.60rem);
+
+  /* Spacing Scale */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+
+  /* Z-Index Hierarchy */
+  --z-bg: 0;
+  --z-base: 1;
+  --z-glass: 10;
+  --z-nav: 100;
+  --z-floating: 200;
+  --z-bottom-sheet: 300;
+  --z-drawer: 400;
+  --z-modal: 500;
+  --z-toast: 600;
+
+  /* Transition Speeds */
+  --transition-fast: 160ms cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-base: 280ms cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-smooth: 450ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Reduced Motion Override */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

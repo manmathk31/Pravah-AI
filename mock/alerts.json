@@ -1,0 +1,46 @@
+[
+  {
+    "id": "alt-109",
+    "timestamp": "2 min ago",
+    "severity": "CRITICAL",
+    "node_id": "node-03",
+    "title": "Flash Inundation Alert — Lowland Blvd Causeway",
+    "description": "Multimodal fusion detected water level breach (1.76m, +8.4cm/hr rise) coupled with roadside camera puddle expansion. Road closure recommended within 35 min.",
+    "action": "Reroute traffic via Ridge Highway Bypass",
+    "confidence": 94,
+    "active": true
+  },
+  {
+    "id": "alt-108",
+    "timestamp": "7 min ago",
+    "severity": "WARNING",
+    "node_id": "node-02",
+    "title": "Rising Retention Sump — Central Metro Underpass",
+    "description": "Drainage capacity reached 78%. Vision feed flags 12cm curb waterlogging in Lane B. Speed limit reduced to 25 km/h.",
+    "action": "Trigger municipal pump station switch 2B",
+    "confidence": 88,
+    "active": true
+  },
+  {
+    "id": "alt-107",
+    "timestamp": "22 min ago",
+    "severity": "INFO",
+    "node_id": "node-06",
+    "title": "Hillside Weir Spillway Inflow Normalization",
+    "description": "Runoff retention rate steady at 1.10m. Upstream watershed sensors report cloud cover shifting eastward.",
+    "action": "Normal transit allowed on Ridge Expressway",
+    "confidence": 99,
+    "active": false
+  },
+  {
+    "id": "alt-106",
+    "timestamp": "45 min ago",
+    "severity": "INFO",
+    "node_id": "node-01",
+    "title": "Riverbank Sensor Battery & LoRa Heartbeat OK",
+    "description": "Daily self-diagnostic passed. Battery 94%, LoRa RSSI -74 dBm, Camera lens wiper cycled.",
+    "action": "None required",
+    "confidence": 100,
+    "active": false
+  }
+]

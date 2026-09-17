@@ -1,0 +1,164 @@
+/* ==========================================================================
+   PravahAi Screen: Safe Routing Guidance View
+   Side-by-side vs stacked comparison, road safety scores, detour penalties
+   ========================================================================== */
+
+.routing-page-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* Route Query Panel */
+.route-query-card {
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.route-inputs-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+@media (min-width: 768px) {
+  .route-inputs-grid {
+    grid-template-columns: 1fr 1fr auto;
+    align-items: flex-end;
+  }
+}
+
+.input-field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.input-field-label {
+  font-size: var(--text-xs);
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* Route Comparison Grid: Side-by-side on desktop, STACKED on mobile */
+.route-comparison-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-6);
+}
+
+@media (min-width: 1024px) {
+  .route-comparison-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* Individual Route Card */
+.route-card {
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  position: relative;
+  border-top: 5px solid var(--accent-primary);
+}
+
+.route-card.route-danger {
+  border-top-color: var(--status-unsafe);
+}
+
+.route-card.route-recommended {
+  border-top-color: var(--status-safe);
+}
+
+.route-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.route-badge-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.detour-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: var(--radius-xs);
+  background: rgba(30, 167, 219, 0.12);
+  color: var(--accent-deep);
+  font-size: var(--text-xs);
+  font-weight: 700;
+}
+
+.route-title {
+  font-size: var(--text-lg);
+  font-weight: 800;
+  color: var(--text-main);
+  line-height: 1.25;
+}
+
+.route-stat-triplet {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  padding: 12px;
+  background: rgba(230, 243, 250, 0.5);
+  border-radius: var(--radius-sm);
+  text-align: center;
+}
+
+.route-stat-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.route-stat-val {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--text-main);
+}
+
+.route-stat-lbl {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.route-hazards-box {
+  padding: 12px 14px;
+  border-radius: var(--radius-sm);
+  font-size: var(--text-xs);
+  line-height: 1.45;
+}
+
+.route-hazards-box.hazard-unsafe {
+  background: var(--status-unsafe-bg);
+  border: 1px solid var(--status-unsafe-border);
+  color: #8c1e22;
+}
+
+.route-hazards-box.hazard-safe {
+  background: var(--status-safe-bg);
+  border: 1px solid var(--status-safe-border);
+  color: #116838;
+}
+
+/* Strikethrough segment styling */
+.segment-crossout {
+  text-decoration: line-through;
+  color: var(--status-unsafe);
+  font-weight: 700;
+}

@@ -1,0 +1,77 @@
+[
+  {
+    "id": "inc-step-5",
+    "timestamp": "14:24:10",
+    "stage": "ACT",
+    "badge": "Action Dispatched",
+    "severity": "CRITICAL",
+    "node_id": "node-03",
+    "title": "Mesh Alert Broadcast & Dynamic Reroute Enacted",
+    "summary": "Digital variable message signs (VMS) updated at Sector 4 Junction. Navigation APIs notified of Lowland Blvd closure. Local LoRa alert beacons transmitting offline packets.",
+    "metrics": {
+      "detour_penalty": "+7 min",
+      "p2p_beacons_reached": 142,
+      "navigation_reroute_pct": "100%"
+    }
+  },
+  {
+    "id": "inc-step-4",
+    "timestamp": "14:21:45",
+    "stage": "ASSESS",
+    "badge": "Road Accessibility Audit",
+    "severity": "CRITICAL",
+    "node_id": "node-03",
+    "title": "Road Segment 3B Classified as UNSAFE for Light Vehicles",
+    "summary": "Simulated flood wave crest will exceed 25cm clearance limit over road crown within 40 minutes. Municipal flood control API triggered.",
+    "metrics": {
+      "road_status": "UNSAFE",
+      "water_depth_projected": "31 cm",
+      "emergency_lane_status": "RESTRICTED"
+    }
+  },
+  {
+    "id": "inc-step-3",
+    "timestamp": "14:18:20",
+    "stage": "PREDICT",
+    "badge": "Nowcast Projection",
+    "severity": "WARNING",
+    "node_id": "node-03",
+    "title": "30-120 Min Hydrodynamic Model Forecasts Impassability",
+    "summary": "Local edge-inferenced hydrodynamic model outputs 89.2% probability of overtopping at Lowland Culvert between 14:50 and 15:30.",
+    "metrics": {
+      "lead_time": "48 min",
+      "peak_probability": "89.2%",
+      "model_latency": "38 ms"
+    }
+  },
+  {
+    "id": "inc-step-2",
+    "timestamp": "14:15:05",
+    "stage": "FUSE",
+    "badge": "Multimodal Fusion",
+    "severity": "WARNING",
+    "node_id": "node-03",
+    "title": "Edge CV + Acoustic Water Flow Data Correlation",
+    "summary": "Camera bounding box detects 18m² continuous water reflection on asphalt. Acoustic hydrophone measures turbulent flow surge at +1.4 m/s.",
+    "metrics": {
+      "cv_ponding_area": "18.4 m²",
+      "acoustic_flow_velocity": "1.42 m/s",
+      "fusion_confidence": "93.4%"
+    }
+  },
+  {
+    "id": "inc-step-1",
+    "timestamp": "14:11:30",
+    "stage": "SENSE",
+    "badge": "Telemetry Anomaly",
+    "severity": "INFO",
+    "node_id": "node-03",
+    "title": "Ultrasonic Gauge Detects Sudden Water Level Spike",
+    "summary": "Dual ultrasonic river gauges record rate of rise leap from 1.2 cm/hr to 8.4 cm/hr following heavy localized convective rain cell (19.2 mm/15min).",
+    "metrics": {
+      "water_level": "1.76 m",
+      "rate_of_rise": "+8.4 cm/hr",
+      "rainfall_rate": "76.8 mm/hr"
+    }
+  }
+]

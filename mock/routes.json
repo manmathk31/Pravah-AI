@@ -1,0 +1,58 @@
+{
+  "origin": {
+    "name": "North Riverside Tech Park (Gate 1)",
+    "lat": 18.5385,
+    "lng": 73.8380
+  },
+  "destination": {
+    "name": "Hillside District Medical Center",
+    "lat": 18.5135,
+    "lng": 73.8570
+  },
+  "direct_route": {
+    "id": "rt-direct",
+    "name": "Lowland Boulevard Arterial (Direct)",
+    "status": "UNSAFE",
+    "status_label": "High Inundation Hazard",
+    "distance_km": 4.1,
+    "est_time_mins": 11,
+    "hazard_score": 88,
+    "passable": false,
+    "color": "#E5484D",
+    "hazard_summary": "Submerged section at Lowland Culvert (Node 03). Water depth > 28cm. Critical vehicle stalling risk.",
+    "detour_time_diff": "0 min",
+    "elevation_profile": "Lowland Basin (536m ASL)",
+    "segments": [
+      [18.5385, 73.8380],
+      [18.5340, 73.8410],
+      [18.5285, 73.8455],
+      [18.5225, 73.8510],
+      [18.5180, 73.8535],
+      [18.5135, 73.8570]
+    ]
+  },
+  "safe_route": {
+    "id": "rt-safe",
+    "name": "Ridge Highway & Upper Bypass (Recommended)",
+    "status": "SAFE",
+    "status_label": "Safe & Elevated Corridor",
+    "distance_km": 5.9,
+    "est_time_mins": 18,
+    "hazard_score": 8,
+    "passable": true,
+    "color": "#2FBF71",
+    "hazard_summary": "100% dry elevation (+48m above river flood plain). Drainage fully operational. Zero standing water.",
+    "detour_time_diff": "+7 min detour",
+    "elevation_profile": "Ridge Crest (584m ASL)",
+    "segments": [
+      [18.5385, 73.8380],
+      [18.5410, 73.8430],
+      [18.5435, 73.8490],
+      [18.5420, 73.8550],
+      [18.5320, 73.8610],
+      [18.5210, 73.8625],
+      [18.5140, 73.8595],
+      [18.5135, 73.8570]
+    ]
+  }
+}
