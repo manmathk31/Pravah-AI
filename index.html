@@ -6,6 +6,8 @@
   <title>PravahAi — Multimodal Edge-AI Flood Nowcasting & Safe Routing</title>
   <meta name="description" content="Hyperlocal flood intelligence 30–120 minutes ahead. Multimodal edge sensing, nowcasting, and resilient offline LoRa routing.">
   <meta name="theme-color" content="#050a12">
+  <link rel="icon" type="image/jpeg" href="assets/paravahai.jpeg">
+  <link rel="apple-touch-icon" href="assets/paravahai.jpeg">
 
   <!-- Google Fonts: Inter & JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -23,7 +25,7 @@
   <link rel="stylesheet" href="css/tokens.css?v=5">
   <link rel="stylesheet" href="css/glass.css?v=5">
   <link rel="stylesheet" href="css/layout.css?v=6">
-  <link rel="stylesheet" href="css/nav.css?v=5">
+  <link rel="stylesheet" href="css/nav.css?v=6">
 
   <!-- Screen Stylesheets -->
   <link rel="stylesheet" href="css/screens/landing.css?v=5">
@@ -54,9 +56,7 @@
         <!-- Brand Wordmark -->
         <a href="#landing" class="nav-brand" aria-label="PravahAi Home">
           <div class="brand-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-            </svg>
+            <img src="assets/paravahai.jpeg" alt="PravahAi Logo" class="brand-logo-img">
           </div>
           <div class="brand-title">
             <div class="brand-name">Pravah<span>Ai</span></div>
@@ -117,6 +117,9 @@
   <aside id="mobile-drawer" class="mobile-drawer" aria-label="Mobile Navigation Drawer">
     <div class="drawer-header">
       <div class="nav-brand">
+        <div class="brand-icon">
+          <img src="assets/paravahai.jpeg" alt="PravahAi Logo" class="brand-logo-img">
+        </div>
         <div class="brand-name">Pravah<span>Ai</span></div>
       </div>
       <button id="drawer-close-btn" class="drawer-close-btn" aria-label="Close menu">✕</button>
@@ -203,7 +206,7 @@
       ['Screen: Incidents', './js/screens/incidents.js?v=10'],
       ['Screen: Routing', './js/screens/routing.js?v=10'],
       ['Screen: Model Health', './js/screens/modelHealth.js?v=10'],
-      ['Screen: About', './js/screens/about.js?v=10'],
+      ['Screen: About', './js/screens/about.js?v=11'],
       ['Client Router', './js/router.js?v=10']
     ];
 

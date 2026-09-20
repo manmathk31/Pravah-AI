@@ -45,6 +45,9 @@ export function renderAbout(container) {
     <div class="about-page-container">
       <!-- Mission Hero -->
       <div class="glass-panel about-hero-box">
+        <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 18px;">
+          <img src="assets/paravahai.jpeg" alt="PravahAi Logo" style="width: 80px; height: 80px; border-radius: 20px; object-fit: contain; background: #ffffff; padding: 3px; box-shadow: 0 0 24px rgba(2, 132, 199, 0.45); border: 2px solid rgba(56, 189, 248, 0.5);">
+        </div>
         <span class="status-pill status-pill-safe">
           Smart Flood Protection Platform
         </span>

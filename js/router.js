@@ -10,7 +10,7 @@ import { renderNodeDetail } from './screens/nodeDetail.js?v=9';
 import { renderIncidents } from './screens/incidents.js?v=9';
 import { renderRouting } from './screens/routing.js?v=9';
 import { renderModelHealth } from './screens/modelHealth.js?v=9';
-import { renderAbout } from './screens/about.js?v=9';
+import { renderAbout } from './screens/about.js?v=11';
 
 export class Router {
   constructor(mountContainerEl, navComponent) {
