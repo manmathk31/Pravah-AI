@@ -5,12 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>PravahAi — Multimodal Edge-AI Flood Nowcasting & Safe Routing</title>
   <meta name="description" content="Hyperlocal flood intelligence 30–120 minutes ahead. Multimodal edge sensing, nowcasting, and resilient offline LoRa routing.">
-  <meta name="theme-color" content="#1ea7db">
+  <meta name="theme-color" content="#050a12">
 
-  <!-- Google Fonts: Plus Jakarta Sans -->
+  <!-- Google Fonts: Inter & JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 
   <!-- Leaflet CDN -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
@@ -20,34 +20,30 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Core PravahAi CSS Design System -->
-  <link rel="stylesheet" href="css/tokens.css">
-  <link rel="stylesheet" href="css/glass.css">
-  <link rel="stylesheet" href="css/layout.css">
-  <link rel="stylesheet" href="css/nav.css">
+  <link rel="stylesheet" href="css/tokens.css?v=5">
+  <link rel="stylesheet" href="css/glass.css?v=5">
+  <link rel="stylesheet" href="css/layout.css?v=5">
+  <link rel="stylesheet" href="css/nav.css?v=5">
 
-  <!-- Screen Specific Styles -->
-  <link rel="stylesheet" href="css/screens/landing.css">
-  <link rel="stylesheet" href="css/screens/dashboard.css">
-  <link rel="stylesheet" href="css/screens/map.css">
-  <link rel="stylesheet" href="css/screens/node-detail.css">
-  <link rel="stylesheet" href="css/screens/incidents.css">
-  <link rel="stylesheet" href="css/screens/routing.css">
-  <link rel="stylesheet" href="css/screens/model-health.css">
-  <link rel="stylesheet" href="css/screens/about.css">
+  <!-- Screen Stylesheets -->
+  <link rel="stylesheet" href="css/screens/landing.css?v=5">
+  <link rel="stylesheet" href="css/screens/dashboard.css?v=5">
+  <link rel="stylesheet" href="css/screens/map.css?v=5">
+  <link rel="stylesheet" href="css/screens/node-detail.css?v=5">
+  <link rel="stylesheet" href="css/screens/incidents.css?v=5">
+  <link rel="stylesheet" href="css/screens/routing.css?v=5">
+  <link rel="stylesheet" href="css/screens/model-health.css?v=5">
+  <link rel="stylesheet" href="css/screens/about.css?v=5">
 </head>
 <body>
 
-  <!-- Ambient Animated Water Mesh Background -->
-  <div class="ambient-water-bg" aria-hidden="true">
-    <div class="ambient-water-blob blob-1"></div>
-    <div class="ambient-water-blob blob-2"></div>
-    <div class="ambient-water-blob blob-3"></div>
-  </div>
+  <!-- Serene Ambient Water Canvas -->
+  <canvas id="ambient-canvas"></canvas>
 
   <!-- Global Connectivity Banner (LoRa Mesh Mode) -->
   <div id="global-banner" class="global-banner global-banner-lora">
-    <span class="banner-lora-badge">LoRa Local Mesh Active</span>
-    <span>Decentralized Peer-to-Peer Mode — Edge Nowcasting & Routing Operating Without Cloud</span>
+    <span class="banner-lora-badge">Offline Radio Active</span>
+    <span>Emergency Radio Mode — Flood predictions and safe routes operating without internet</span>
   </div>
 
   <!-- App Shell -->
@@ -58,25 +54,25 @@
         <!-- Brand Wordmark -->
         <a href="#landing" class="nav-brand" aria-label="PravahAi Home">
           <div class="brand-icon">
-            <svg style="width: 22px; height: 22px; fill: none; stroke: currentColor;" viewBox="0 0 24 24" stroke-width="2.5">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
               <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
             </svg>
           </div>
           <div class="brand-title">
             <div class="brand-name">Pravah<span>Ai</span></div>
-            <span class="brand-tagline">Edge Flood Nowcasting</span>
+            <span class="brand-tagline">Smart Flood Warnings</span>
           </div>
         </a>
 
         <!-- Desktop Navigation Links -->
         <ul class="desktop-nav-links">
           <li><a href="#landing" class="nav-link-item">Home</a></li>
-          <li><a href="#dashboard" class="nav-link-item">Dashboard</a></li>
-          <li><a href="#map" class="nav-link-item">Basin Map</a></li>
-          <li><a href="#node-detail?id=node-03" class="nav-link-item">Diagnostics</a></li>
-          <li><a href="#incidents" class="nav-link-item">Incidents</a></li>
+          <li><a href="#dashboard" class="nav-link-item">Flood Console</a></li>
+          <li><a href="#map" class="nav-link-item">Flood Map</a></li>
+          <li><a href="#node-detail?id=node-03" class="nav-link-item">Stations</a></li>
+          <li><a href="#incidents" class="nav-link-item">Warning Log</a></li>
           <li><a href="#routing" class="nav-link-item">Safe Routes</a></li>
-          <li><a href="#model-health" class="nav-link-item">Model Health</a></li>
+          <li><a href="#model-health" class="nav-link-item">System Health</a></li>
           <li><a href="#about" class="nav-link-item">About</a></li>
         </ul>
 
@@ -85,16 +81,16 @@
           <div class="connectivity-toggle" title="Toggle Network Synchronization Mode">
             <span id="toggle-online" class="toggle-option active">
               <span class="status-dot status-dot-safe"></span>
-              Cloud
+              Online
             </span>
             <span id="toggle-lora" class="toggle-option">
-              📡 LoRa
+              Radio
             </span>
           </div>
 
           <!-- Mobile Hamburger Button -->
           <button id="hamburger-btn" class="hamburger-btn" aria-label="Open Navigation Menu">
-            <svg style="width: 22px; height: 22px; fill: none; stroke: currentColor;" viewBox="0 0 24 24" stroke-width="2">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
             </svg>
           </button>
@@ -109,9 +105,9 @@
 
     <!-- App Persistent Footer -->
     <footer class="app-footer">
-      <div>PravahAi • Portable Multimodal Edge Hydrological Nowcasting</div>
+      <div>PravahAi • Smart Flood Warnings & Safe Detour Routes</div>
       <div class="prototype-disclaimer">
-        Prototype — Data simulated in browser for hackathon evaluation
+        Interactive Prototype — Real-time simulation running in your browser
       </div>
     </footer>
   </div>
@@ -121,32 +117,31 @@
   <aside id="mobile-drawer" class="mobile-drawer" aria-label="Mobile Navigation Drawer">
     <div class="drawer-header">
       <div class="nav-brand">
-        <div class="brand-icon">🌊</div>
         <div class="brand-name">Pravah<span>Ai</span></div>
       </div>
       <button id="drawer-close-btn" class="drawer-close-btn" aria-label="Close menu">✕</button>
     </div>
 
     <ul class="drawer-links">
-      <li><a href="#landing" class="drawer-link">🏠 Home Overview</a></li>
-      <li><a href="#dashboard" class="drawer-link">📊 Operational Dashboard</a></li>
-      <li><a href="#map" class="drawer-link">🗺 Interactive Basin Map</a></li>
-      <li><a href="#node-detail?id=node-03" class="drawer-link">🔬 Edge Node Diagnostics</a></li>
-      <li><a href="#incidents" class="drawer-link">⏱ Incident & Action Ledger</a></li>
-      <li><a href="#routing" class="drawer-link">🚦 Safe-Route Guidance</a></li>
-      <li><a href="#model-health" class="drawer-link">🧠 Edge AI Model Health</a></li>
-      <li><a href="#about" class="drawer-link">ℹ️ System Architecture & About</a></li>
+      <li><a href="#landing" class="drawer-link">Home Overview</a></li>
+      <li><a href="#dashboard" class="drawer-link">Live Flood Console</a></li>
+      <li><a href="#map" class="drawer-link">City Flood Map</a></li>
+      <li><a href="#node-detail?id=node-03" class="drawer-link">Water Stations & Sensors</a></li>
+      <li><a href="#incidents" class="drawer-link">Warning & Alert Log</a></li>
+      <li><a href="#routing" class="drawer-link">Safe Detour Routes</a></li>
+      <li><a href="#model-health" class="drawer-link">System & AI Health</a></li>
+      <li><a href="#about" class="drawer-link">How It Works & About</a></li>
     </ul>
 
-    <div style="margin-top: auto; padding-top: 20px; border-top: 1px solid rgba(10,110,168,0.1);">
-      <div style="font-size: var(--text-xs); color: var(--text-muted); margin-bottom: 8px;">NETWORK MODE</div>
-      <div style="font-size: 0.8rem; font-weight: 700; color: var(--accent-deep);">
-        Resilient Offline LoRa Mesh Supported
+    <div style="margin-top: auto; padding-top: 16px; border-top: 1px solid var(--glass-border);">
+      <div style="font-size: 0.7rem; color: var(--text-muted); margin-bottom: 2px;">OFFLINE READY</div>
+      <div style="font-size: 0.78rem; font-weight: 700; color: var(--text-primary);">
+        Works even when cell towers fail
       </div>
     </div>
   </aside>
 
-  <!-- Mobile Bottom Tab Bar (Quick Access for touch viewports <1024px) -->
+  <!-- Mobile Bottom Tab Bar -->
   <nav class="mobile-bottom-tabs" aria-label="Bottom Navigation">
     <a href="#landing" class="tab-link active" title="Home">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -155,25 +150,25 @@
       <span>Home</span>
     </a>
 
-    <a href="#dashboard" class="tab-link" title="Dashboard">
+    <a href="#dashboard" class="tab-link" title="Console">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
       </svg>
-      <span>Stats</span>
+      <span>Console</span>
     </a>
 
-    <a href="#map" class="tab-link" title="Basin Map">
+    <a href="#map" class="tab-link" title="Flood Map">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/>
       </svg>
       <span>Map</span>
     </a>
 
-    <a href="#incidents" class="tab-link" title="Incidents">
+    <a href="#incidents" class="tab-link" title="Alerts">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
       </svg>
-      <span>Timeline</span>
+      <span>Alerts</span>
     </a>
 
     <a href="#routing" class="tab-link" title="Safe Routes">
@@ -190,28 +185,82 @@
     <!-- Populated by BottomSheetComponent -->
   </div>
 
-  <!-- Application Bootstrap Entrypoint -->
+  <!-- Bulletproof Application Bootstrap with Visible Crash Diagnostics -->
   <script type="module">
-    import { sim } from './js/sim.js';
-    import { NavigationComponent } from './js/components/nav.js';
-    import { DemoControlsComponent } from './js/components/demoControls.js';
-    import { Router } from './js/router.js';
+    const moduleList = [
+      ['Sim Engine', './js/sim.js?v=9'],
+      ['Water Canvas', './js/components/waterCanvas.js?v=9'],
+      ['Navigation', './js/components/nav.js?v=9'],
+      ['Demo Controls', './js/components/demoControls.js?v=9'],
+      ['Risk Gauge', './js/components/riskGauge.js?v=9'],
+      ['Alert Feed', './js/components/alertFeed.js?v=9'],
+      ['Bottom Sheet', './js/components/bottomSheet.js?v=9'],
+      ['Camera Feed', './js/components/cameraFeed.js?v=9'],
+      ['Screen: Landing', './js/screens/landing.js?v=9'],
+      ['Screen: Dashboard', './js/screens/dashboard.js?v=9'],
+      ['Screen: Map', './js/screens/map.js?v=9'],
+      ['Screen: Node Detail', './js/screens/nodeDetail.js?v=9'],
+      ['Screen: Incidents', './js/screens/incidents.js?v=9'],
+      ['Screen: Routing', './js/screens/routing.js?v=9'],
+      ['Screen: Model Health', './js/screens/modelHealth.js?v=9'],
+      ['Screen: About', './js/screens/about.js?v=9'],
+      ['Client Router', './js/router.js?v=9']
+    ];
 
-    document.addEventListener('DOMContentLoaded', async () => {
-      // 1. Initialize simulation engine data
-      await sim.init();
+    function displayCrash(title, msg, stack) {
+      console.error(title, msg, stack);
+      const box = document.createElement('div');
+      box.id = 'pravah-crash-box';
+      box.style.cssText = 'position:fixed;top:64px;left:16px;right:16px;background:rgba(127,29,29,0.95);color:#fff;padding:24px;border-radius:14px;z-index:999999;font-family:monospace;border:2px solid #ef4444;box-shadow:0 16px 40px rgba(0,0,0,0.8);backdrop-filter:blur(16px);max-width:800px;margin:0 auto;';
+      box.innerHTML = `
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+          <span style="font-size:1.4rem;">⚠️</span>
+          <h3 style="color:#fca5a5;margin:0;font-size:1.1rem;font-weight:800;">${title}</h3>
+        </div>
+        <p style="color:#fecaca;margin:0 0 12px 0;font-size:0.88rem;line-height:1.6;">${msg}</p>
+        <pre style="font-size:0.75rem;background:rgba(0,0,0,0.5);padding:12px;border-radius:8px;overflow:auto;max-height:220px;color:#cbd5e1;border:1px solid rgba(255,255,255,0.1);">${stack || 'No additional stack available.'}</pre>
+        <button onclick="location.reload()" style="margin-top:14px;padding:8px 16px;background:#ef4444;color:#fff;border:none;border-radius:6px;cursor:pointer;font-weight:700;font-size:0.8rem;">Retry Refresh</button>
+      `;
+      document.body.prepend(box);
+    }
 
-      // 2. Initialize navigation chrome
-      const nav = new NavigationComponent();
+    async function launchApp() {
+      // 1. Verify every module loads without compile or syntax errors
+      for (const [name, modPath] of moduleList) {
+        try {
+          await import(modPath);
+        } catch (err) {
+          displayCrash(`Syntax / Load Error in ${name}`, `The file <code>${modPath}</code> failed to evaluate: <strong>${err.message}</strong>`, err.stack);
+          return;
+        }
+      }
 
-      // 3. Initialize floating demo controls
-      new DemoControlsComponent();
+      // 2. Initialize application components
+      try {
+        const { sim } = await import('./js/sim.js?v=9');
+        const { NavigationComponent } = await import('./js/components/nav.js?v=9');
+        const { DemoControlsComponent } = await import('./js/components/demoControls.js?v=9');
+        const { WaterCanvas } = await import('./js/components/waterCanvas.js?v=9');
+        const { Router } = await import('./js/router.js?v=9');
 
-      // 4. Initialize client router
-      const viewContainer = document.getElementById('view-container');
-      const router = new Router(viewContainer, nav);
-      router.init();
-    });
+        try {
+          new WaterCanvas('ambient-canvas');
+        } catch (canvasErr) {
+          console.warn('Water canvas ambient disabled:', canvasErr);
+        }
+
+        await sim.init();
+        const nav = new NavigationComponent();
+        new DemoControlsComponent();
+        const viewContainer = document.getElementById('view-container');
+        const router = new Router(viewContainer, nav);
+        router.init();
+      } catch (runtimeErr) {
+        displayCrash('Runtime Initialization Error', runtimeErr.message, runtimeErr.stack);
+      }
+    }
+
+    launchApp();
   </script>
 </body>
 </html>

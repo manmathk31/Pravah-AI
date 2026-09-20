@@ -1,6 +1,6 @@
 /**
  * PravahAi Demo Controls Component (demoControls.js)
- * Floating Action Button & Modal for judges to trigger scenarios on mobile or desktop on cue.
+ * Prominent, high-contrast floating trigger panel with vivid glowing badge
  */
 
 import { sim } from '../sim.js';
@@ -15,54 +15,60 @@ export class DemoControlsComponent {
   }
 
   render() {
-    // Inject floating button & modal into body
     const container = document.createElement('div');
     container.id = 'demo-controls-root';
     container.innerHTML = `
-      <!-- Floating Action Button (Always reachable on mobile & desktop) -->
-      <button id="demo-fab" class="demo-fab" aria-label="Open Hackathon Demo Controls" title="Hackathon Demo Controls">
-        <span class="fab-icon">⚡</span>
-        <span class="fab-text">Demo Tools</span>
+      <!-- High-Visibility Glowing Floating Action Button (Mobile-Optimized) -->
+      <button id="demo-fab" class="demo-fab" aria-label="Open Demo Scenarios" title="Live Simulation Controls">
+        <span class="fab-halo-ring"></span>
+        <span class="fab-pulse-dot"></span>
+        <span class="fab-icon-bolt">⚡</span>
+        <span class="fab-label"><span class="fab-short">Demo</span><span class="fab-full"> Scenarios</span></span>
       </button>
 
       <!-- Glass Modal Popover -->
       <div id="demo-modal-overlay" class="demo-modal-overlay"></div>
       <div id="demo-modal" class="demo-modal glass-panel-elevated">
         <div class="demo-modal-header">
-          <div style="display: flex; align-items: center; gap: 8px;">
-            <span style="font-size: 1.2rem;">⚡</span>
-            <div>
-              <h3 style="font-size: var(--text-base); font-weight: 800; color: var(--text-main);">Live Demo Trigger Panel</h3>
-              <p style="font-size: var(--text-xs); color: var(--text-muted);">Fast-forward hydrological events for hackathon judging</p>
+          <div>
+            <div style="font-size: 0.7rem; font-weight: 800; color: var(--accent-cyan); text-transform: uppercase; letter-spacing: 0.06em;">
+              Interactive Simulation
             </div>
+            <h3 style="font-size: 1.05rem; font-weight: 800; color: #ffffff; margin-top: 2px;">Test Flood Scenarios</h3>
           </div>
-          <button id="demo-modal-close" class="btn btn-glass btn-sm" style="width: 36px; height: 36px; padding: 0;">✕</button>
+          <button id="demo-modal-close" class="btn btn-glass btn-sm" style="width: 32px; height: 32px; padding: 0; font-size: 1rem;">✕</button>
         </div>
 
         <div class="demo-modal-body">
-          <div class="demo-action-box">
-            <div style="font-weight: 700; font-size: var(--text-sm); margin-bottom: 4px; color: var(--status-unsafe);">
-              🚨 Primary Hackathon Beat: Flash Inundation
+          <!-- Primary Scenario -->
+          <div style="padding: 16px; background: rgba(14, 28, 46, 0.85); border: 1px solid rgba(239, 68, 68, 0.45); border-radius: var(--radius-sm); margin-bottom: 14px; box-shadow: 0 4px 18px rgba(0, 0, 0, 0.4);">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px;">
+              <span style="font-weight: 800; font-size: 0.86rem; color: #f87171; display: flex; align-items: center; gap: 6px;">
+                <span class="status-dot status-dot-unsafe"></span>
+                Flash Flood Test
+              </span>
+              <span class="status-pill status-pill-unsafe" style="font-size: 0.65rem; padding: 2px 8px;">TRY IT LIVE</span>
             </div>
-            <p style="font-size: var(--text-xs); color: var(--text-secondary); margin-bottom: 10px;">
-              Simulates extreme cloudburst over Node 03 (Lowland Causeway). Water surges past critical barrier, pushes urgent alert, triggers CV detection, and shifts recommended navigation route to Ridge Bypass.
+            <p style="font-size: 0.76rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 12px;">
+              Simulate sudden heavy rain over <strong>Station 03 (Lowland Causeway)</strong>. Watch water rise quickly, trigger warnings, and automatically guide drivers to safe higher roads.
             </p>
-            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-              <button id="btn-trigger-flood" class="btn btn-danger" style="flex: 1;">
-                🌊 Trigger Flood Scenario
+            <div style="display: flex; gap: 8px;">
+              <button id="btn-trigger-flood" class="btn btn-danger btn-sm" style="flex: 1.2; font-weight: 800; padding: 8px 12px; font-size: 0.78rem;">
+                ⚡ Start Flash Flood
               </button>
-              <button id="btn-reset-scenario" class="btn btn-glass" style="flex: 1;">
-                🔄 Reset Baseline
+              <button id="btn-reset-scenario" class="btn btn-glass btn-sm" style="flex: 1; padding: 8px 10px; font-size: 0.78rem;">
+                Reset to Normal
               </button>
             </div>
           </div>
 
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 14px;">
-            <button id="btn-speed-toggle" class="btn btn-glass" style="font-size: var(--text-xs);">
-              ⚡ Speed: <strong id="speed-label" style="margin-left: 4px;">1x (Normal)</strong>
+          <!-- Secondary Quick Toggles -->
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 6px;">
+            <button id="btn-speed-toggle" class="btn btn-glass btn-sm" style="padding: 8px 12px; font-size: 0.76rem;">
+              Speed: <strong id="speed-label" style="margin-left: 4px; color: var(--accent-cyan); font-weight: 800;">1x</strong>
             </button>
-            <button id="btn-lora-toggle" class="btn btn-glass" style="font-size: var(--text-xs);">
-              📡 Mode: <strong id="lora-mode-label" style="margin-left: 4px;">Cloud Online</strong>
+            <button id="btn-lora-toggle" class="btn btn-glass btn-sm" style="padding: 8px 12px; font-size: 0.76rem;">
+              Mode: <strong id="lora-mode-label" style="margin-left: 4px; color: var(--status-safe); font-weight: 800;">Online</strong>
             </button>
           </div>
         </div>
@@ -89,41 +95,107 @@ export class DemoControlsComponent {
     const style = document.createElement('style');
     style.textContent = `
       .demo-fab {
-        position: fixed;
-        bottom: calc(76px + env(safe-area-inset-bottom));
-        right: 16px;
-        z-index: var(--z-floating);
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        padding: 10px 18px;
-        min-height: 44px;
-        border-radius: var(--radius-full);
-        background: linear-gradient(135deg, var(--accent-deep) 0%, var(--accent-primary) 100%);
-        color: #ffffff;
-        border: 2px solid rgba(255, 255, 255, 0.85);
-        box-shadow: 0 8px 24px rgba(10, 110, 168, 0.4);
-        cursor: pointer;
-        font-family: inherit;
-        font-size: var(--text-xs);
-        font-weight: 800;
-        letter-spacing: 0.02em;
-        transition: all var(--transition-fast);
+        position: fixed !important;
+        bottom: calc(64px + env(safe-area-inset-bottom)) !important;
+        right: 12px !important;
+        z-index: 350 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 5px !important;
+        height: 32px !important;
+        min-height: 32px !important;
+        padding: 0 11px !important;
+        border-radius: 16px !important;
+        background: linear-gradient(135deg, #0284c7 0%, #0d9488 50%, #2563eb 100%) !important;
+        color: #ffffff !important;
+        border: 1px solid rgba(56, 189, 248, 0.7) !important;
+        box-shadow: 0 4px 14px rgba(2, 132, 199, 0.5) !important;
+        cursor: pointer !important;
+        font-family: inherit !important;
+        font-size: 0.72rem !important;
+        font-weight: 800 !important;
+        letter-spacing: 0.02em !important;
+        transition: all 200ms cubic-bezier(0.16, 1, 0.3, 1) !important;
+        backdrop-filter: blur(12px) !important;
       }
-      @media (min-width: 1024px) {
+      .fab-full {
+        display: none !important;
+      }
+      .fab-short {
+        display: inline !important;
+      }
+      @media (min-width: 768px) {
         .demo-fab {
-          bottom: 24px;
-          right: 24px;
-          padding: 12px 22px;
-          font-size: var(--text-sm);
+          bottom: 24px !important;
+          right: 24px !important;
+          height: 42px !important;
+          min-height: 42px !important;
+          padding: 0 18px !important;
+          font-size: 0.82rem !important;
+          gap: 8px !important;
+          border-radius: 21px !important;
+          box-shadow: 0 6px 24px rgba(2, 132, 199, 0.65), 0 0 20px rgba(16, 185, 129, 0.3) !important;
+        }
+        .fab-full {
+          display: inline !important;
         }
       }
       .demo-fab:hover {
         transform: translateY(-2px) scale(1.03);
-        box-shadow: 0 12px 30px rgba(10, 110, 168, 0.55);
+        box-shadow: 0 8px 30px rgba(2, 132, 199, 0.8), 0 0 30px rgba(56, 189, 248, 0.6);
+        border-color: #7dd3fc;
       }
       .demo-fab:active {
         transform: translateY(0) scale(0.97);
+      }
+      .fab-halo-ring {
+        display: none;
+      }
+      @media (min-width: 1024px) {
+        .fab-halo-ring {
+          display: block;
+          position: absolute;
+          top: -5px;
+          left: -5px;
+          right: -5px;
+          bottom: -5px;
+          border-radius: var(--radius-full);
+          border: 1.5px solid rgba(56, 189, 248, 0.45);
+          animation: fabHaloPulse 2.4s cubic-bezier(0.25, 1, 0.5, 1) infinite;
+          pointer-events: none;
+        }
+      }
+      @keyframes fabHaloPulse {
+        0% {
+          transform: scale(0.95);
+          opacity: 0.8;
+        }
+        70% {
+          transform: scale(1.15);
+          opacity: 0;
+        }
+        100% {
+          transform: scale(1.2);
+          opacity: 0;
+        }
+      }
+      .fab-pulse-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: #34d399;
+        box-shadow: 0 0 8px #34d399;
+        animation: beaconPulse 1.6s infinite;
+      }
+      .fab-icon-bolt {
+        font-size: 0.85rem;
+        line-height: 1;
+        filter: drop-shadow(0 0 4px #38bdf8);
+      }
+      .fab-label {
+        font-weight: 800;
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
       }
       .demo-modal-overlay {
         position: fixed;
@@ -131,9 +203,9 @@ export class DemoControlsComponent {
         left: 0;
         width: 100vw;
         height: 100vh;
-        background: rgba(14, 34, 51, 0.5);
-        backdrop-filter: blur(6px);
-        z-index: var(--z-modal);
+        background: rgba(0, 0, 0, 0.65);
+        backdrop-filter: blur(8px);
+        z-index: 500;
         opacity: 0;
         visibility: hidden;
         transition: opacity var(--transition-fast), visibility var(--transition-fast);
@@ -144,21 +216,23 @@ export class DemoControlsComponent {
       }
       .demo-modal {
         position: fixed;
-        bottom: calc(84px + env(safe-area-inset-bottom));
+        bottom: calc(76px + env(safe-area-inset-bottom));
         right: 16px;
         max-width: 380px;
         width: calc(100vw - 32px);
-        z-index: calc(var(--z-modal) + 1);
+        z-index: 501;
         padding: 20px;
-        border-radius: var(--radius-lg);
-        transform: translateY(20px) scale(0.95);
+        transform: translateY(15px) scale(0.96);
         opacity: 0;
         visibility: hidden;
         transition: all var(--transition-base);
+        background: rgba(10, 20, 32, 0.95);
+        border: 1px solid rgba(56, 189, 248, 0.35);
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 30px rgba(2, 132, 199, 0.25);
       }
       @media (min-width: 1024px) {
         .demo-modal {
-          bottom: 80px;
+          bottom: 76px;
           right: 24px;
         }
       }
@@ -169,17 +243,11 @@ export class DemoControlsComponent {
       }
       .demo-modal-header {
         display: flex;
-        align-items: center;
+        align-items: flex-start;
         justify-content: space-between;
         margin-bottom: 14px;
         padding-bottom: 12px;
-        border-bottom: 1px solid rgba(10, 110, 168, 0.12);
-      }
-      .demo-action-box {
-        padding: 12px 14px;
-        border-radius: var(--radius-sm);
-        background: rgba(230, 243, 250, 0.7);
-        border: 1px solid rgba(10, 110, 168, 0.15);
+        border-bottom: 1px solid rgba(56, 189, 248, 0.15);
       }
     `;
     document.head.appendChild(style);
@@ -192,25 +260,25 @@ export class DemoControlsComponent {
 
     this.triggerFloodBtn.addEventListener('click', () => {
       sim.triggerFloodScenario();
-      this.triggerFloodBtn.textContent = '🌊 Flood Scenario Active!';
+      this.triggerFloodBtn.textContent = 'Scenario Active!';
       setTimeout(() => {
-        this.triggerFloodBtn.textContent = '🌊 Trigger Flood Scenario';
-      }, 3000);
+        this.triggerFloodBtn.textContent = 'Trigger Inundation';
+      }, 2500);
     });
 
     this.resetBtn.addEventListener('click', () => {
       sim.resetScenario();
-      this.resetBtn.textContent = '✓ Baseline Restored';
+      this.resetBtn.textContent = 'Baseline Restored';
       setTimeout(() => {
-        this.resetBtn.textContent = '🔄 Reset Baseline';
-      }, 2500);
+        this.resetBtn.textContent = 'Reset Baseline';
+      }, 2000);
     });
 
     this.speedBtn.addEventListener('click', () => {
       const nextSpeed = sim.simulationSpeed === 1 ? 5 : 1;
       sim.setSpeed(nextSpeed);
       if (this.speedLabel) {
-        this.speedLabel.textContent = nextSpeed === 5 ? '5x (Fast)' : '1x (Normal)';
+        this.speedLabel.textContent = nextSpeed === 5 ? '5x' : '1x';
       }
     });
 
@@ -218,13 +286,13 @@ export class DemoControlsComponent {
       const nextMode = sim.isLoRaMode ? 'online' : 'lora';
       sim.setConnectivityMode(nextMode);
       if (this.loraLabel) {
-        this.loraLabel.textContent = nextMode === 'lora' ? 'LoRa Offline' : 'Cloud Online';
+        this.loraLabel.textContent = nextMode === 'lora' ? 'LoRa Mesh' : 'Cloud Sync';
       }
     });
 
     sim.on('connectivityChanged', ({ isLoRaMode }) => {
       if (this.loraLabel) {
-        this.loraLabel.textContent = isLoRaMode ? 'LoRa Offline' : 'Cloud Online';
+        this.loraLabel.textContent = isLoRaMode ? 'LoRa Mesh' : 'Cloud Sync';
       }
     });
   }

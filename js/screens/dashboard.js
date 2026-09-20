@@ -1,6 +1,6 @@
 /**
  * PravahAi Screen: Overview Dashboard (dashboard.js)
- * Risk gauge, 30-120min horizon forecast chart, fleet status strip, live alerts feed
+ * Dark cyber-civic operational console with glowing charts and telemetry pods
  */
 
 import { sim } from '../sim.js';
@@ -14,11 +14,11 @@ let unsubscribeTick = null;
 
 export function renderDashboard(container) {
   container.innerHTML = `
-    <!-- Mobile Sticky Risk Mini-Bar -->
+    <!-- Mobile Sticky Risk Bar -->
     <div class="mobile-sticky-risk-bar">
       <div class="sticky-risk-left">
         <span class="live-beacon-dot"></span>
-        <span>METRO BASIN NOWCAST:</span>
+        <span>CITY FLOOD RISK:</span>
         <span id="mobile-sticky-risk-score" class="sticky-risk-score">--%</span>
       </div>
       <span id="mobile-sticky-status-pill" class="status-pill status-pill-safe">SAFE</span>
@@ -27,36 +27,32 @@ export function renderDashboard(container) {
     <!-- Section Header -->
     <div class="section-header">
       <div>
-        <h1 class="section-title">Overview Dashboard</h1>
-        <p class="section-subtitle">Real-time edge telemetry and 30–120 minute flood risk nowcasting</p>
+        <h1 class="section-title">Live Flood Console</h1>
+        <p class="section-subtitle">Live water levels and smart flood predictions for the next 1 to 2 hours</p>
       </div>
-      <div style="display: flex; gap: 8px; align-items: center;">
-        <span class="live-beacon">
-          <span class="live-beacon-dot"></span>
-          EDGE MESH LIVE (4s TICK)
-        </span>
+      <div class="live-beacon">
+        <span class="live-beacon-dot"></span>
+        6 STATIONS ONLINE
       </div>
     </div>
 
     <!-- Top Grid: Risk Gauge & Horizon Forecast Chart -->
     <div class="dashboard-top-grid">
-      <!-- Risk Gauge -->
       <div id="risk-gauge-container" class="glass-panel gauge-card">
         <!-- Injected by RiskGaugeComponent -->
       </div>
 
-      <!-- Horizon Forecast Chart -->
       <div class="glass-panel horizon-chart-card">
-        <div class="chart-header">
+        <div class="section-header" style="margin-bottom: 12px;">
           <div>
-            <h3 style="font-size: var(--text-base); font-weight: 800; color: var(--text-main);">
-              Nowcast Risk Projection by Horizon
+            <h3 style="font-size: 1rem; font-weight: 800; color: #ffffff;">
+              Predicted Flood Risk (Next 2 Hours)
             </h3>
-            <p style="font-size: var(--text-xs); color: var(--text-muted);">
-              Hydrological edge-surrogate model prediction (30 / 60 / 90 / 120 minutes)
+            <p style="font-size: 0.75rem; color: var(--text-muted);">
+              AI forecast showing how water levels will change over the next 30, 60, and 120 minutes
             </p>
           </div>
-          <span class="status-pill status-pill-safe" id="forecast-trend-tag">TREND: STABLE</span>
+          <span class="status-pill status-pill-safe" id="forecast-trend-tag">STATUS: STABLE</span>
         </div>
 
         <div class="chart-container-box">
@@ -67,17 +63,27 @@ export function renderDashboard(container) {
 
     <!-- Fleet / Node Status Strip -->
     <div class="fleet-section">
-      <div class="chart-header" style="margin-bottom: 10px;">
-        <h3 style="font-size: var(--text-base); font-weight: 800; color: var(--text-main);">
-          Edge Monitoring Fleet Status
-        </h3>
-        <span style="font-size: var(--text-xs); color: var(--text-muted);">
-          6 Active Distributed Nodes • Click node for deep diagnostics
-        </span>
+      <div class="fleet-header-row">
+        <div>
+          <div class="fleet-tag">LIVE STREET SENSORS</div>
+          <h3 class="fleet-title">Live Water Monitoring Stations</h3>
+          <p class="fleet-subtitle">Swipe or use arrows to view all 6 monitoring stations</p>
+        </div>
+        <div class="fleet-controls-group">
+          <span class="status-pill status-pill-safe" style="font-size: 0.68rem;">6 Stations Active</span>
+          <div class="scroll-nav-buttons">
+            <button id="btn-fleet-prev" class="btn-scroll-arrow" aria-label="Scroll left" title="Scroll left">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+            </button>
+            <button id="btn-fleet-next" class="btn-scroll-arrow" aria-label="Scroll right" title="Scroll right">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+        </div>
       </div>
 
       <div id="fleet-nodes-mount" class="fleet-scroll-container">
-        <!-- Rendered dynamically from sim.nodes -->
+        <!-- Rendered dynamically -->
       </div>
     </div>
 
@@ -87,7 +93,6 @@ export function renderDashboard(container) {
     </div>
   `;
 
-  // Initialize Components
   const gaugeMount = container.querySelector('#risk-gauge-container');
   gaugeComponent = new RiskGaugeComponent(gaugeMount);
 
@@ -95,23 +100,30 @@ export function renderDashboard(container) {
   alertFeedComponent = new AlertFeedComponent(alertsMount);
   alertFeedComponent.update(sim.alerts);
 
-  // Initialize Horizon Chart using Chart.js
   initHorizonChart(container.querySelector('#horizon-chart'));
+  
+  const fleetMount = container.querySelector('#fleet-nodes-mount');
+  renderFleetStrip(fleetMount);
 
-  // Render initial fleet
-  renderFleetStrip(container.querySelector('#fleet-nodes-mount'));
+  // Arrow scroll buttons
+  const prevBtn = container.querySelector('#btn-fleet-prev');
+  const nextBtn = container.querySelector('#btn-fleet-next');
+  prevBtn?.addEventListener('click', () => {
+    fleetMount?.scrollBy({ left: -240, behavior: 'smooth' });
+  });
+  nextBtn?.addEventListener('click', () => {
+    fleetMount?.scrollBy({ left: 240, behavior: 'smooth' });
+  });
 
-  // Update initial gauge
   const initialRisk = sim.getOverallSystemRisk();
   gaugeComponent.update(initialRisk);
   updateMobileStickyBar(initialRisk);
 
-  // Subscribe to sim ticks
   if (unsubscribeTick) unsubscribeTick();
-  unsubscribeTick = sim.on('tick', ({ nodes, systemRisk }) => {
+  unsubscribeTick = sim.on('tick', ({ systemRisk }) => {
     gaugeComponent?.update(systemRisk);
     updateMobileStickyBar(systemRisk);
-    renderFleetStrip(container.querySelector('#fleet-nodes-mount'));
+    renderFleetStrip(fleetMount);
     alertFeedComponent?.update(sim.alerts);
     updateHorizonChart(systemRisk);
   });
@@ -141,31 +153,37 @@ function renderFleetStrip(mountEl) {
     const isUnsafe = node.status === 'UNSAFE';
     const isRisk = node.status === 'AT_RISK';
     const pillClass = isUnsafe ? 'status-pill-unsafe' : isRisk ? 'status-pill-risk' : 'status-pill-safe';
+    const pct = Math.min(100, Math.round((node.water_level / node.critical_threshold) * 100));
+    const barColor = isUnsafe ? '#ef4444' : isRisk ? '#f59e0b' : '#38bdf8';
 
     return `
-      <a href="#node-detail?id=${node.id}" class="glass-panel glass-card-interactive fleet-node-card" style="text-decoration: none;">
-        <div class="fleet-node-header">
+      <a href="#node-detail?id=${node.id}" class="fleet-node-card" title="Click to view full diagnostics for ${node.name}">
+        <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 8px;">
           <span class="fleet-node-name" title="${node.name}">${node.name}</span>
-          <span class="status-pill ${pillClass}" style="padding: 2px 8px; font-size: 0.68rem;">
+          <span class="status-pill ${pillClass}" style="padding: 2px 7px; font-size: 0.62rem; flex-shrink: 0;">
             ${node.status.replace('_', ' ')}
           </span>
         </div>
 
+        <div class="node-water-bar-track">
+          <div class="node-water-bar-fill" style="width: ${pct}%; background: ${barColor};"></div>
+        </div>
+
         <div class="fleet-metrics-row">
           <span>Water Depth</span>
-          <span class="fleet-water-val" style="color: ${isUnsafe ? 'var(--status-unsafe)' : isRisk ? 'var(--status-risk)' : 'var(--accent-deep)'};">
+          <span class="fleet-water-val" style="color: ${barColor};">
             ${node.water_level}m
           </span>
         </div>
 
         <div class="fleet-metrics-row">
-          <span>Rate of Rise</span>
-          <span style="font-weight: 600;">${node.rate_of_rise > 0 ? '+' : ''}${node.rate_of_rise} cm/h</span>
+          <span>Rising Speed</span>
+          <span style="font-weight: 700; color: #ffffff;">${node.rate_of_rise > 0 ? '+' : ''}${node.rate_of_rise} cm/h</span>
         </div>
 
-        <div style="display: flex; justify-content: space-between; font-size: 0.7rem; color: var(--text-muted); border-top: 1px solid rgba(10,110,168,0.08); padding-top: 6px;">
-          <span>⚡ ${node.battery_pct}%</span>
-          <span>📶 ${node.lora_rssi} dBm</span>
+        <div class="fleet-card-footer">
+          <span>Battery ${node.battery_pct}%</span>
+          <span>Radio ${node.lora_rssi} dBm</span>
           <span>${node.last_ping}</span>
         </div>
       </a>
@@ -180,35 +198,35 @@ function initHorizonChart(canvasEl) {
   }
 
   const ctx = canvasEl.getContext('2d');
-  const gradient = ctx.createLinearGradient(0, 0, 0, 240);
-  gradient.addColorStop(0, 'rgba(30, 167, 219, 0.45)');
-  gradient.addColorStop(1, 'rgba(30, 167, 219, 0.02)');
+  const gradient = ctx.createLinearGradient(0, 0, 0, 220);
+  gradient.addColorStop(0, 'rgba(56, 189, 248, 0.28)');
+  gradient.addColorStop(1, 'rgba(56, 189, 248, 0.01)');
 
   chartInstance = new Chart(ctx, {
     type: 'line',
     data: {
-      labels: ['Now (0m)', '+30 min', '+60 min', '+90 min', '+120 min'],
+      labels: ['0m (Now)', '+30m', '+60m', '+90m', '+120m'],
       datasets: [
         {
-          label: 'Baseline Model Forecast',
+          label: 'Surrogate Risk Nowcast',
           data: [28, 42, 65, 78, 85],
-          borderColor: '#1ea7db',
+          borderColor: '#38bdf8',
           backgroundColor: gradient,
-          borderWidth: 3,
+          borderWidth: 2.5,
           fill: true,
           tension: 0.35,
-          pointBackgroundColor: '#ffffff',
-          pointBorderColor: '#1ea7db',
+          pointBackgroundColor: '#060d16',
+          pointBorderColor: '#38bdf8',
           pointBorderWidth: 2.5,
           pointRadius: 4.5,
-          pointHoverRadius: 7
+          pointHoverRadius: 6
         },
         {
-          label: 'Critical Road Inundation Threshold',
+          label: 'Critical Clearance Threshold (75%)',
           data: [75, 75, 75, 75, 75],
-          borderColor: 'rgba(217, 56, 62, 0.65)',
-          borderWidth: 2,
-          borderDash: [6, 6],
+          borderColor: 'rgba(239, 68, 68, 0.65)',
+          borderWidth: 1.5,
+          borderDash: [5, 5],
           fill: false,
           pointRadius: 0
         }
@@ -225,17 +243,21 @@ function initHorizonChart(canvasEl) {
         legend: {
           position: 'top',
           labels: {
-            boxWidth: 14,
+            boxWidth: 8,
             usePointStyle: true,
-            font: { family: "'Plus Jakarta Sans', sans-serif", size: 11, weight: '600' },
-            color: '#243e52'
+            font: { family: "'Inter', sans-serif", size: 10, weight: '600' },
+            color: '#94a3b8'
           }
         },
         tooltip: {
-          backgroundColor: 'rgba(12, 31, 46, 0.9)',
+          backgroundColor: 'rgba(6, 13, 22, 0.95)',
+          titleColor: '#ffffff',
+          bodyColor: '#cbd5e1',
+          borderColor: 'rgba(56, 189, 248, 0.3)',
+          borderWidth: 1,
           padding: 10,
           cornerRadius: 8,
-          bodyFont: { size: 12 }
+          bodyFont: { size: 11 }
         }
       },
       scales: {
@@ -243,17 +265,17 @@ function initHorizonChart(canvasEl) {
           min: 0,
           max: 100,
           ticks: {
-            stepSize: 20,
+            stepSize: 25,
             callback: v => `${v}%`,
-            font: { size: 10, family: "'Plus Jakarta Sans', sans-serif" },
-            color: '#48667c'
+            font: { size: 9, family: "'Inter', sans-serif" },
+            color: '#64748b'
           },
-          grid: { color: 'rgba(10, 110, 168, 0.08)' }
+          grid: { color: 'rgba(255, 255, 255, 0.05)' }
         },
         x: {
           ticks: {
-            font: { size: 11, family: "'Plus Jakarta Sans', sans-serif" },
-            color: '#48667c'
+            font: { size: 10, family: "'Inter', sans-serif" },
+            color: '#94a3b8'
           },
           grid: { display: false }
         }
@@ -265,7 +287,6 @@ function initHorizonChart(canvasEl) {
 function updateHorizonChart(systemRisk) {
   if (!chartInstance) return;
   const isSurge = systemRisk >= 65;
-
   const mult = isSurge ? 1.25 : 0.85;
   const data = [
     systemRisk,

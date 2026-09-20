@@ -1,38 +1,34 @@
 /**
- * PravahAi Screen: Incident & Decision Timeline View (incidents.js)
- * Step-by-step audit log of physical sensing, AI inference, and decentralized action dispatch
+ * PravahAi Screen: Incident & Action Timeline View (incidents.js)
+ * Clean, single-column chronological log of sensing, AI inference, and decentralized action
  */
 
 import { sim } from '../sim.js';
 
 let activeFilter = 'ALL';
-let unsubscribeTick = null;
 let unsubscribeScenario = null;
 
 export function renderIncidents(container) {
   container.innerHTML = `
     <div class="timeline-page-container">
-      <!-- Section Header -->
       <div class="section-header">
         <div>
-          <h1 class="section-title">Incident & Action Timeline</h1>
+          <h1 class="section-title">Warning & Safety Action Log</h1>
           <p class="section-subtitle">
-            Auditable chronological log of the SENSE → FUSE → PREDICT → ASSESS → ACT decision chain
+            Complete chronological record of all flood warnings, AI forecasts, and emergency safety actions
           </p>
         </div>
-        <span class="status-pill status-pill-safe">Immutable Ledger</span>
+        <span class="status-pill status-pill-safe">Verified Safety Log</span>
       </div>
 
-      <!-- Filter Chips -->
       <div class="timeline-filter-bar">
         <button class="filter-chip active" data-filter="ALL">All Events (${sim.incidents.length})</button>
-        <button class="filter-chip" data-filter="CRITICAL">Critical Actions</button>
-        <button class="filter-chip" data-filter="ACT">ACT (Reroutes & Alerts)</button>
-        <button class="filter-chip" data-filter="PREDICT">PREDICT (Surrogate Inferences)</button>
-        <button class="filter-chip" data-filter="SENSE">SENSE (Telemetry)</button>
+        <button class="filter-chip" data-filter="CRITICAL">Severe Warnings</button>
+        <button class="filter-chip" data-filter="ACT">Safety Actions</button>
+        <button class="filter-chip" data-filter="PREDICT">AI Forecasts</button>
+        <button class="filter-chip" data-filter="SENSE">Sensor Readings</button>
       </div>
 
-      <!-- Vertical Timeline Track -->
       <div id="timeline-track-mount" class="timeline-track">
         <!-- Rendered dynamically -->
       </div>
@@ -42,7 +38,6 @@ export function renderIncidents(container) {
   const mountEl = container.querySelector('#timeline-track-mount');
   renderTimelineItems(mountEl);
 
-  // Filter click handlers
   container.querySelectorAll('.filter-chip').forEach(chip => {
     chip.addEventListener('click', () => {
       container.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
@@ -52,7 +47,6 @@ export function renderIncidents(container) {
     });
   });
 
-  // Listen for new incidents from scenario triggers
   if (unsubscribeScenario) unsubscribeScenario();
   unsubscribeScenario = sim.on('floodScenarioTriggered', () => {
     renderTimelineItems(mountEl);
@@ -73,14 +67,14 @@ function renderTimelineItems(mountEl) {
 
   if (filtered.length === 0) {
     mountEl.innerHTML = `
-      <div class="glass-panel" style="padding: 24px; text-align: center; color: var(--text-muted);">
+      <div class="glass-panel" style="padding: 24px; text-align: center; color: var(--text-muted); font-size: 0.85rem;">
         No incident events match the selected filter.
       </div>
     `;
     return;
   }
 
-  mountEl.innerHTML = filtered.map((item, index) => {
+  mountEl.innerHTML = filtered.map(item => {
     const isCritical = item.severity === 'CRITICAL';
     const isWarning = item.severity === 'WARNING';
     const pillClass = isCritical ? 'status-pill-unsafe' : isWarning ? 'status-pill-risk' : 'status-pill-safe';
@@ -90,7 +84,6 @@ function renderTimelineItems(mountEl) {
                      item.stage === 'PREDICT' ? '3' :
                      item.stage === 'ASSESS' ? '4' : '5';
 
-    // Format metrics pills
     const metricsHtml = item.metrics ? Object.entries(item.metrics).map(([k, v]) => `
       <span class="timeline-metric-pill">
         ${k.replace(/_/g, ' ')}: <strong>${v}</strong>

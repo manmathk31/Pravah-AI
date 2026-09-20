@@ -1,7 +1,6 @@
 /**
  * PravahAi Screen: Safe Routing Guidance View (routing.js)
- * Compares primary direct route vs. elevated flood-safe detour corridor.
- * Stacks vertically on mobile, side-by-side on desktop.
+ * Clean comparison of primary direct route vs elevated flood-safe bypass corridor without emojis
  */
 
 import { sim } from '../sim.js';
@@ -12,43 +11,39 @@ let unsubscribeScenario = null;
 export function renderRouting(container) {
   container.innerHTML = `
     <div class="routing-page-container">
-      <!-- Section Header -->
       <div class="section-header">
         <div>
-          <h1 class="section-title">Hyperlocal Safe-Route Guidance</h1>
+          <h1 class="section-title">Safe Detour Navigation</h1>
           <p class="section-subtitle">
-            Dynamic road clearance audit: automatic detours around low-lying flooded culverts
+            Find dry, open roads that avoid flooded underpasses and overflowing rivers in real time
           </p>
         </div>
-        <span class="status-pill status-pill-safe">Dynamic Re-routing Enabled</span>
+        <span class="status-pill status-pill-safe">Automatic Detours Active</span>
       </div>
 
       <!-- Route Selector Panel -->
       <div class="glass-panel route-query-card">
         <div class="route-inputs-grid">
           <div class="input-field-group">
-            <label class="input-field-label">Origin (Current Location)</label>
+            <label class="input-field-label">Starting Point</label>
             <select id="route-origin-select" class="form-select">
-              <option value="tech-park" selected>📍 North Riverside Tech Park (Gate 1)</option>
-              <option value="metro-stn">📍 Sector 4 Metro Station</option>
-              <option value="industrial-hub">📍 East Industrial Corridor</option>
+              <option value="tech-park" selected>North Riverside Tech Park (Gate 1)</option>
+              <option value="metro-stn">Sector 4 Metro Station</option>
+              <option value="industrial-hub">East Industrial Corridor</option>
             </select>
           </div>
 
           <div class="input-field-group">
             <label class="input-field-label">Destination</label>
             <select id="route-dest-select" class="form-select">
-              <option value="hospital" selected>🏥 Hillside District Medical Center</option>
-              <option value="civic-center">🏛 City Administration Center</option>
-              <option value="high-school">🏫 West Ridge Educational Campus</option>
+              <option value="hospital" selected>Hillside District Medical Center</option>
+              <option value="civic-center">City Administration Center</option>
+              <option value="high-school">West Ridge Educational Campus</option>
             </select>
           </div>
 
-          <button id="btn-recalc-route" class="btn btn-primary" style="height: 44px;">
-            <svg style="width: 18px; height: 18px; fill: none; stroke: currentColor;" viewBox="0 0 24 24" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-            </svg>
-            Re-evaluate Paths
+          <button id="btn-recalc-route" class="btn btn-primary" style="height: 42px;">
+            Check Road Safety
           </button>
         </div>
       </div>
@@ -88,25 +83,25 @@ function renderRouteComparison(mountEl) {
   const safe = sim.routes.safe_route;
 
   mountEl.innerHTML = `
-    <!-- Direct Lowland Route (Hazardous / Submerged) -->
+    <!-- Direct Route (Hazardous) -->
     <div class="glass-panel route-card route-danger">
       <div class="route-card-header">
-        <div class="route-badge-row">
+        <div style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap;">
           <span class="status-pill status-pill-unsafe">
             <span class="status-dot status-dot-unsafe"></span>
-            ${isFloodActive ? 'ROAD CLOSED / SUBMERGED' : 'HIGH FLOOD RISK'}
+            ${isFloodActive ? 'ROAD CLOSED — FLOODED' : 'CAUTION — RISK OF FLOODING'}
           </span>
-          <span class="detour-pill" style="background: rgba(217, 56, 62, 0.12); color: var(--status-unsafe);">
-            Fastest Path (Blocked)
+          <span class="detour-pill" style="background: rgba(239, 68, 68, 0.1); color: var(--status-unsafe);">
+            Direct Route (Lowland Causeway)
           </span>
         </div>
-        <span style="font-size: var(--text-xs); color: var(--text-muted); font-weight: 700;">ROUTE 1</span>
+        <span style="font-size: 0.72rem; color: var(--text-muted); font-weight: 700;">ROUTE 01</span>
       </div>
 
       <div>
         <h3 class="route-title ${isFloodActive ? 'segment-crossout' : ''}">${direct.name}</h3>
-        <p style="font-size: var(--text-xs); color: var(--text-muted); margin-top: 4px;">
-          ${direct.elevation_profile} • Traverses River Basin Culvert
+        <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 2px;">
+          ${direct.elevation_profile} • Low-elevation road crossing river canal
         </p>
       </div>
 
@@ -117,51 +112,50 @@ function renderRouteComparison(mountEl) {
         </div>
         <div class="route-stat-item">
           <span class="route-stat-val" style="color: var(--status-unsafe);">${direct.est_time_mins} min</span>
-          <span class="route-stat-lbl">Transit Time</span>
+          <span class="route-stat-lbl">Driving Time</span>
         </div>
         <div class="route-stat-item">
           <span class="route-stat-val" style="color: var(--status-unsafe);">${isFloodActive ? '98%' : '76%'}</span>
-          <span class="route-stat-lbl">Inundation Risk</span>
+          <span class="route-stat-lbl">Flood Danger</span>
         </div>
       </div>
 
       <div class="route-hazards-box hazard-unsafe">
-        <div style="font-weight: 800; margin-bottom: 4px; display: flex; align-items: center; gap: 6px;">
-          <span>⚠ HAZARD WARNING: Segment 3B Imminent Failure</span>
+        <div style="font-weight: 700; margin-bottom: 2px;">
+          Flood Danger: Water Covering Road
         </div>
         <div>
-          ${direct.hazard_summary}
-          Water level at Lowland Culvert is currently <strong>${node3 ? node3.water_level : 1.76}m</strong>.
-          Curb height exceeded. Heavy risk of engine hydro-lock.
+          Water level at Lowland Causeway is <strong>${node3 ? node3.water_level : 1.76}m</strong>.
+          Water is too deep for normal cars. High risk of engine stalling and getting trapped.
         </div>
       </div>
 
-      <div style="margin-top: auto; display: flex; gap: 8px;">
-        <button class="btn btn-glass btn-sm" style="flex: 1; color: var(--status-unsafe); opacity: 0.7; cursor: not-allowed;">
-          ✕ Not Advised for Travel
+      <div style="margin-top: auto;">
+        <button class="btn btn-glass btn-sm" style="width: 100%; color: var(--status-unsafe); opacity: 0.75; cursor: not-allowed;">
+          Do Not Drive — Road Impassable
         </button>
       </div>
     </div>
 
-    <!-- Recommended Safe Route (Elevated Bypass Corridor) -->
+    <!-- Recommended Safe Route (Bypass) -->
     <div class="glass-panel-elevated route-card route-recommended">
       <div class="route-card-header">
-        <div class="route-badge-row">
+        <div style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap;">
           <span class="status-pill status-pill-safe">
             <span class="status-dot status-dot-safe"></span>
-            PRAVAHAI RECOMMENDED
+            RECOMMENDED
           </span>
-          <span class="detour-pill" style="background: rgba(34, 167, 96, 0.12); color: var(--status-safe);">
+          <span class="detour-pill" style="background: rgba(16, 185, 129, 0.1); color: var(--status-safe);">
             ${safe.detour_time_diff}
           </span>
         </div>
-        <span style="font-size: var(--text-xs); color: var(--status-safe); font-weight: 800;">SAFE CORRIDOR</span>
+        <span style="font-size: 0.72rem; color: var(--status-safe); font-weight: 800;">SAFE DRY ROUTE</span>
       </div>
 
       <div>
         <h3 class="route-title">${safe.name}</h3>
-        <p style="font-size: var(--text-xs); color: var(--text-muted); margin-top: 4px;">
-          ${safe.elevation_profile} • 100% Above 100-Year Flood Plane
+        <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 2px;">
+          ${safe.elevation_profile} • Elevated High Ground • Completely Dry
         </p>
       </div>
 
@@ -172,28 +166,27 @@ function renderRouteComparison(mountEl) {
         </div>
         <div class="route-stat-item">
           <span class="route-stat-val" style="color: var(--status-safe);">${safe.est_time_mins} min</span>
-          <span class="route-stat-lbl">Transit Time</span>
+          <span class="route-stat-lbl">Driving Time</span>
         </div>
         <div class="route-stat-item">
           <span class="route-stat-val" style="color: var(--status-safe);">4%</span>
-          <span class="route-stat-lbl">Hazard Score</span>
+          <span class="route-stat-lbl">Flood Danger</span>
         </div>
       </div>
 
       <div class="route-hazards-box hazard-safe">
-        <div style="font-weight: 800; margin-bottom: 4px; display: flex; align-items: center; gap: 6px;">
-          <span>✓ VERIFIED CLEAR: 0 Flood Hazard Points</span>
+        <div style="font-weight: 700; margin-bottom: 2px;">
+          Verified Safe: Zero Water On Road
         </div>
         <div>
-          ${safe.hazard_summary}
-          Node 06 retention weir upstream telemetry confirms zero runoff spillover.
-          Continuous dry pavement verified by roadside vision nodes.
+          Hillside weather station confirms zero flooding.
+          Street cameras confirm completely dry pavement all the way to your destination.
         </div>
       </div>
 
-      <div style="margin-top: auto; display: flex; gap: 8px;">
-        <a href="#map" class="btn btn-primary btn-sm" style="flex: 1; text-align: center;">
-          View Route on Live Map →
+      <div style="margin-top: auto;">
+        <a href="#map" class="btn btn-primary btn-sm" style="width: 100%; text-align: center;">
+          Open Safe Route on Map →
         </a>
       </div>
     </div>

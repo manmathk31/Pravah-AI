@@ -1,15 +1,14 @@
 /* ==========================================================================
-   PravahAi Screen: Model Health & System Status View
-   Edge AI telemetry, confusion matrix metrics, sensor uptime, 1->2->4 grid
+   PravahAi Screen: Model Health View — Dark Oceanic Cyber-Civic
+   Clean metric cards, 1->2->4 responsive grid, confidence chart
    ========================================================================== */
 
 .health-page-container {
   display: flex;
   flex-direction: column;
-  gap: var(--space-6);
+  gap: 24px;
 }
 
-/* Metric Cards: 1 column on mobile, 2 on tablet, 4 on desktop */
 .health-metrics-grid {
   display: grid;
   grid-template-columns: 1fr;
@@ -30,76 +29,97 @@
 }
 
 .health-metric-card {
-  padding: var(--space-5);
+  padding: 22px 20px;
   display: flex;
   flex-direction: column;
   gap: 6px;
+  background: rgba(12, 26, 44, 0.85);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  position: relative;
+  overflow: hidden;
+}
+
+.health-metric-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent-cyan), transparent);
 }
 
 .health-metric-title {
-  font-size: var(--text-xs);
-  font-weight: 700;
-  color: var(--text-muted);
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: var(--accent-cyan);
   text-transform: uppercase;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.05em;
+  font-family: var(--font-family-mono);
 }
 
 .health-metric-val {
-  font-size: 2.2rem;
+  font-size: 2.1rem;
   font-weight: 800;
-  color: var(--text-main);
+  color: #ffffff;
   line-height: 1;
 }
 
 .health-metric-sub {
-  font-size: var(--text-xs);
-  color: var(--status-safe);
-  font-weight: 600;
+  font-size: 0.78rem;
+  color: #34d399;
+  font-weight: 700;
 }
 
 .illustrative-tag {
   font-size: 0.68rem;
   color: var(--text-muted);
   font-style: italic;
+  margin-top: 4px;
 }
 
-/* Health Details Grid: 1 col on mobile, 2 col on tablet/desktop */
+/* Health Details */
 .health-details-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--space-6);
+  gap: 18px;
 }
 
 @media (min-width: 1024px) {
   .health-details-grid {
     grid-template-columns: 1.4fr 1fr;
+    gap: 22px;
   }
 }
 
 .health-detail-card {
-  padding: var(--space-6);
+  padding: 24px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 14px;
+  background: rgba(10, 22, 36, 0.85);
 }
 
 .sensor-uptime-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: var(--text-xs);
+  font-size: 0.78rem;
 }
 
 .sensor-uptime-table th {
   text-align: left;
   padding: 10px 8px;
   color: var(--text-muted);
-  border-bottom: 1px solid rgba(10, 110, 168, 0.15);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   text-transform: uppercase;
-  font-weight: 700;
+  font-weight: 800;
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
 }
 
 .sensor-uptime-table td {
   padding: 12px 8px;
-  border-bottom: 1px solid rgba(10, 110, 168, 0.06);
-  color: var(--text-main);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  color: #e2e8f0;
 }

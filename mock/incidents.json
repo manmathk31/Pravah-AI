@@ -2,76 +2,76 @@
   {
     "id": "inc-step-5",
     "timestamp": "14:24:10",
-    "stage": "ACT",
-    "badge": "Action Dispatched",
+    "stage": "PROTECT",
+    "badge": "Action Taken",
     "severity": "CRITICAL",
     "node_id": "node-03",
-    "title": "Mesh Alert Broadcast & Dynamic Reroute Enacted",
-    "summary": "Digital variable message signs (VMS) updated at Sector 4 Junction. Navigation APIs notified of Lowland Blvd closure. Local LoRa alert beacons transmitting offline packets.",
+    "title": "Emergency Alert Broadcast & Safe Detour Opened",
+    "summary": "Electronic road signs at Sector 4 Junction updated. Navigation maps notified of Lowland Blvd closure. Local emergency radios broadcasting warnings to nearby drivers.",
     "metrics": {
-      "detour_penalty": "+7 min",
-      "p2p_beacons_reached": 142,
-      "navigation_reroute_pct": "100%"
+      "detour_time": "+7 min",
+      "radios_reached": 142,
+      "traffic_diverted": "100%"
     }
   },
   {
     "id": "inc-step-4",
     "timestamp": "14:21:45",
-    "stage": "ASSESS",
-    "badge": "Road Accessibility Audit",
+    "stage": "CHECK",
+    "badge": "Safety Check",
     "severity": "CRITICAL",
     "node_id": "node-03",
-    "title": "Road Segment 3B Classified as UNSAFE for Light Vehicles",
-    "summary": "Simulated flood wave crest will exceed 25cm clearance limit over road crown within 40 minutes. Municipal flood control API triggered.",
+    "title": "Road Section 3B Marked UNSAFE for Cars",
+    "summary": "Water will exceed 25cm (exhaust pipe height) within 40 minutes. City flood management notified to prepare barricades.",
     "metrics": {
       "road_status": "UNSAFE",
-      "water_depth_projected": "31 cm",
-      "emergency_lane_status": "RESTRICTED"
+      "expected_depth": "31 cm",
+      "road_lane": "CLOSED"
     }
   },
   {
     "id": "inc-step-3",
     "timestamp": "14:18:20",
-    "stage": "PREDICT",
-    "badge": "Nowcast Projection",
+    "stage": "FORECAST",
+    "badge": "AI Forecast",
     "severity": "WARNING",
     "node_id": "node-03",
-    "title": "30-120 Min Hydrodynamic Model Forecasts Impassability",
-    "summary": "Local edge-inferenced hydrodynamic model outputs 89.2% probability of overtopping at Lowland Culvert between 14:50 and 15:30.",
+    "title": "AI Predicts Road Will Flood in 48 Minutes",
+    "summary": "Local on-site AI predicts an 89% chance that water will overflow onto Lowland Causeway between 14:50 and 15:30.",
     "metrics": {
-      "lead_time": "48 min",
-      "peak_probability": "89.2%",
-      "model_latency": "38 ms"
+      "warning_time": "48 min",
+      "flood_chance": "89.2%",
+      "calculation_speed": "38 ms"
     }
   },
   {
     "id": "inc-step-2",
     "timestamp": "14:15:05",
-    "stage": "FUSE",
-    "badge": "Multimodal Fusion",
+    "stage": "VERIFY",
+    "badge": "Sensor Check",
     "severity": "WARNING",
     "node_id": "node-03",
-    "title": "Edge CV + Acoustic Water Flow Data Correlation",
-    "summary": "Camera bounding box detects 18m² continuous water reflection on asphalt. Acoustic hydrophone measures turbulent flow surge at +1.4 m/s.",
+    "title": "Street Camera and Water Gauge Both Confirm Rising Water",
+    "summary": "Camera sees 18m² of standing water on the street. Water depth sensor confirms fast water surge at 1.4 meters per second.",
     "metrics": {
-      "cv_ponding_area": "18.4 m²",
-      "acoustic_flow_velocity": "1.42 m/s",
-      "fusion_confidence": "93.4%"
+      "puddle_area": "18.4 m²",
+      "water_speed": "1.42 m/s",
+      "sensor_agreement": "93.4%"
     }
   },
   {
     "id": "inc-step-1",
     "timestamp": "14:11:30",
-    "stage": "SENSE",
-    "badge": "Telemetry Anomaly",
+    "stage": "MEASURE",
+    "badge": "Sensor Alert",
     "severity": "INFO",
     "node_id": "node-03",
-    "title": "Ultrasonic Gauge Detects Sudden Water Level Spike",
-    "summary": "Dual ultrasonic river gauges record rate of rise leap from 1.2 cm/hr to 8.4 cm/hr following heavy localized convective rain cell (19.2 mm/15min).",
+    "title": "Water Sensor Detects Sudden Water Surge",
+    "summary": "Water gauge reports water rise jumped from 1.2 cm/hr to 8.4 cm/hr following heavy downpour (19 mm in 15 minutes).",
     "metrics": {
       "water_level": "1.76 m",
-      "rate_of_rise": "+8.4 cm/hr",
-      "rainfall_rate": "76.8 mm/hr"
+      "rise_rate": "+8.4 cm/hr",
+      "rainfall": "76.8 mm/hr"
     }
   }
 ]

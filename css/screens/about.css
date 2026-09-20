@@ -1,87 +1,370 @@
 /* ==========================================================================
-   PravahAi Screen: About & System Documentation View
-   Problem statement, edge-AI innovation, team credits, prototype badge
+   PravahAi Screen: About View — Dark Oceanic Beast Design
+   Clear executive civic copy, interactive hardware pod showcase, 3-pillar grid
    ========================================================================== */
 
 .about-page-container {
-  max-width: 960px;
+  max-width: 1040px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: var(--space-8);
+  gap: 28px;
 }
 
+/* Executive Hero Box */
 .about-hero-box {
-  padding: var(--space-8) var(--space-6);
+  padding: 40px 28px;
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--space-4);
+  gap: 16px;
+  background: rgba(12, 26, 44, 0.85);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 16px 45px rgba(0, 0, 0, 0.6), 0 0 25px rgba(2, 132, 199, 0.15);
 }
 
-.about-definition-text {
-  font-size: var(--text-lg);
-  font-weight: 600;
-  color: var(--accent-deep);
-  line-height: 1.5;
+.about-hero-box::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 20%;
+  right: 20%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #38bdf8, #10b981, transparent);
+}
+
+.about-brand-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.03em;
+  margin: 0;
+}
+
+.about-brand-title span {
+  color: var(--accent-cyan);
+}
+
+.about-tagline {
+  font-size: 1.15rem;
+  font-weight: 400;
+  color: #e2e8f0;
+  line-height: 1.6;
   max-width: 780px;
 }
 
-.about-section-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--space-6);
+.about-tagline strong {
+  color: #ffffff;
+  font-weight: 700;
 }
 
-@media (min-width: 768px) {
-  .about-section-grid {
-    grid-template-columns: 1fr 1fr;
+.hero-quick-highlights {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 8px;
+}
+
+.highlight-chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  background: rgba(16, 36, 60, 0.7);
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  border-radius: var(--radius-full);
+}
+
+.highlight-val {
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: var(--accent-cyan);
+  font-family: var(--font-family-mono);
+}
+
+.highlight-lbl {
+  font-size: 0.74rem;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+/* Three Pillar Comparison Grid */
+.three-pillar-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  margin-top: 8px;
+}
+
+@media (min-width: 860px) {
+  .three-pillar-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
   }
 }
 
-.about-content-card {
-  padding: var(--space-6);
+.pillar-card {
+  padding: 24px 20px;
+  background: rgba(10, 22, 36, 0.8);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 14px;
+  position: relative;
+  transition: transform var(--transition-fast), border-color var(--transition-fast);
 }
 
-.about-content-card h3 {
-  font-size: var(--text-lg);
+.pillar-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(56, 189, 248, 0.45);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.pillar-num {
+  font-size: 0.76rem;
   font-weight: 800;
-  color: var(--text-main);
-  letter-spacing: -0.01em;
+  color: var(--accent-cyan);
+  font-family: var(--font-family-mono);
+  letter-spacing: 0.08em;
 }
 
-.about-content-card p {
-  font-size: var(--text-sm);
+.pillar-title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1.25;
+}
+
+.pillar-problem {
+  padding: 12px;
+  background: rgba(239, 68, 68, 0.08);
+  border-left: 3px solid #ef4444;
+  border-radius: var(--radius-xs);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.problem-label {
+  font-size: 0.68rem;
+  font-weight: 800;
+  color: #f87171;
+  letter-spacing: 0.05em;
+}
+
+.pillar-problem p {
+  font-size: 0.78rem;
   color: var(--text-secondary);
+  line-height: 1.45;
+}
+
+.pillar-solution {
+  padding: 12px;
+  background: rgba(16, 185, 129, 0.09);
+  border-left: 3px solid #10b981;
+  border-radius: var(--radius-xs);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: auto;
+}
+
+.solution-label {
+  font-size: 0.68rem;
+  font-weight: 800;
+  color: #34d399;
+  letter-spacing: 0.05em;
+}
+
+.pillar-solution p {
+  font-size: 0.78rem;
+  color: #e2e8f0;
+  line-height: 1.45;
+}
+
+/* Interactive Hardware Module Chips */
+.hw-module-chips {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  margin-bottom: 16px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.hw-chip-btn {
+  padding: 8px 16px;
+  border-radius: var(--radius-full);
+  background: rgba(14, 28, 46, 0.7);
+  border: 1px solid var(--glass-border);
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+  transition: all var(--transition-fast);
+}
+
+.hw-chip-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--text-muted);
+  transition: all var(--transition-fast);
+}
+
+.hw-chip-btn:hover {
+  color: #ffffff;
+  border-color: rgba(56, 189, 248, 0.4);
+}
+
+.hw-chip-btn.active {
+  background: rgba(56, 189, 248, 0.16);
+  color: var(--accent-cyan);
+  border-color: var(--accent-cyan);
+  box-shadow: 0 0 16px rgba(56, 189, 248, 0.25);
+}
+
+.hw-chip-btn.active .hw-chip-dot {
+  background: var(--accent-cyan);
+  box-shadow: 0 0 6px var(--accent-cyan);
+}
+
+/* Hardware Inspector Card */
+.hw-inspector-card {
+  padding: 22px 24px;
+  background: rgba(9, 20, 34, 0.95);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  border-radius: var(--radius-md);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+}
+
+.hw-card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.hw-chip-title {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin-top: 4px;
+}
+
+.hw-chip-hardware {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--accent-cyan);
+  font-family: var(--font-family-mono);
+  margin-top: 2px;
+}
+
+.hw-spec-callout {
+  padding: 6px 12px;
+  background: rgba(16, 185, 129, 0.12);
+  border: 1px solid rgba(16, 185, 129, 0.35);
+  border-radius: var(--radius-xs);
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: #34d399;
+  font-family: var(--font-family-mono);
+}
+
+.hw-details-text {
+  font-size: 0.82rem;
+  color: #cbd5e1;
   line-height: 1.6;
 }
 
-.team-credits-card {
-  padding: var(--space-6);
-  text-align: center;
+/* 4-Step Field Flow */
+.flow-steps-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+
+@media (min-width: 680px) {
+  .flow-steps-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .flow-steps-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.flow-box {
+  padding: 20px 16px;
+  background: rgba(10, 22, 36, 0.75);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 14px;
+  gap: 8px;
+  transition: transform var(--transition-fast), border-color var(--transition-fast);
+}
+
+.flow-box:hover {
+  transform: translateY(-2px);
+  border-color: rgba(56, 189, 248, 0.4);
+}
+
+.flow-step-tag {
+  font-size: 0.68rem;
+  font-weight: 800;
+  color: var(--accent-cyan);
+  font-family: var(--font-family-mono);
+  letter-spacing: 0.06em;
+}
+
+.flow-box-title {
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.flow-box-desc {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  line-height: 1.45;
+}
+
+/* Credits Card */
+.team-credits-card {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: rgba(10, 22, 36, 0.75);
 }
 
 .team-tags-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-  justify-content: center;
+  gap: 8px;
+  margin-top: 4px;
 }
 
 .team-badge {
-  padding: 6px 16px;
+  padding: 4px 10px;
+  background: rgba(56, 189, 248, 0.1);
+  border: 1px solid rgba(56, 189, 248, 0.25);
   border-radius: var(--radius-full);
-  background: rgba(30, 167, 219, 0.12);
-  border: 1px solid var(--glass-border);
-  color: var(--accent-deep);
-  font-size: var(--text-xs);
+  font-size: 0.72rem;
   font-weight: 700;
+  color: var(--accent-cyan);
 }

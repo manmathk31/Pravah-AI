@@ -1,37 +1,37 @@
 /* ==========================================================================
-   PravahAi Screen: Interactive Map View
-   Leaflet Canvas, Glass HUD, Mobile Bottom Sheet, Dynamic Reroute Polyline
+   PravahAi Screen: Map View — Dark Oceanic Cyber-Civic
+   Full-bleed dark Leaflet canvas, glowing HUD, dark mobile bottom sheet
    ========================================================================== */
 
 .map-page-container {
   display: flex;
   flex-direction: column;
   position: relative;
-  height: calc(100vh - 120px);
-  min-height: 500px;
+  height: calc(100vh - 130px);
+  min-height: 520px;
   border-radius: var(--radius-lg);
   overflow: hidden;
-  box-shadow: var(--shadow-lg);
-  border: 1px solid var(--glass-border);
+  box-shadow: 0 16px 45px rgba(0, 0, 0, 0.7), 0 0 25px rgba(2, 132, 199, 0.15);
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  background: #060d16;
 }
 
 @media (max-width: 767px) {
   .map-page-container {
-    height: calc(100vh - 145px); /* Maximizes height on mobile phone screens */
+    height: calc(100vh - 140px);
     min-height: 440px;
     border-radius: var(--radius-md);
   }
 }
 
-/* Map Canvas Container */
 #leaflet-map {
   width: 100%;
   height: 100%;
   z-index: 1;
-  background: #cde4ee;
+  background: #060d16;
 }
 
-/* Glass Floating HUD Controls over Map (Desktop & Tablet) */
+/* Floating HUD */
 .map-hud-top {
   position: absolute;
   top: 14px;
@@ -52,47 +52,50 @@
 }
 
 .map-hud-pill {
-  background: rgba(255, 255, 255, 0.88);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: rgba(10, 22, 36, 0.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   padding: 8px 14px;
   border-radius: var(--radius-full);
-  border: 1px solid var(--glass-border);
-  box-shadow: var(--shadow-md);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.5);
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  font-size: var(--text-xs);
-  font-weight: 700;
-  color: var(--text-main);
+  font-size: 0.74rem;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: 0.02em;
 }
 
-/* Legend: Floating glass box on desktop, icon popup toggle on mobile */
+/* Map Legend */
 .map-legend-card {
   pointer-events: auto;
   position: absolute;
-  bottom: 20px;
+  bottom: 18px;
   left: 16px;
   z-index: 10;
-  padding: 12px 16px;
+  padding: 14px 16px;
   max-width: 280px;
   display: flex;
   flex-direction: column;
   gap: 8px;
-  background: rgba(255, 255, 255, 0.88);
+  background: rgba(9, 20, 34, 0.94);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
 }
 
 @media (max-width: 767px) {
   .map-legend-card {
-    display: none; /* Collapsed into mobile toggle button */
+    display: none;
   }
 }
 
 .map-legend-card.mobile-open {
   display: flex !important;
-  bottom: 80px;
-  left: 14px;
-  right: 14px;
+  bottom: 74px;
+  left: 12px;
+  right: 12px;
   max-width: none;
 }
 
@@ -100,20 +103,21 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: var(--text-xs);
+  font-size: 0.74rem;
   font-weight: 600;
+  color: #cbd5e1;
 }
 
 .legend-line-sample {
-  width: 24px;
+  width: 22px;
   height: 4px;
   border-radius: 2px;
 }
 
-/* Mobile Legend & Heatmap Toggle Buttons */
+/* Mobile Action Bar */
 .map-mobile-action-bar {
   display: flex;
-  gap: 8px;
+  gap: 6px;
   position: absolute;
   top: 14px;
   right: 14px;
@@ -128,20 +132,22 @@
 }
 
 .map-tool-icon-btn {
-  width: 40px;
-  height: 40px;
-  border-radius: var(--radius-sm);
-  background: rgba(255, 255, 255, 0.9);
-  border: 1px solid var(--glass-border);
-  box-shadow: var(--shadow-md);
+  padding: 8px 12px;
+  border-radius: var(--radius-xs);
+  background: rgba(12, 26, 44, 0.92);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  color: var(--text-main);
+  color: var(--accent-cyan);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
 }
 
-/* Desktop Floating Node Inspection Panel */
+/* Desktop Floating Node Inspector */
 .desktop-node-inspect-card {
   pointer-events: auto;
   position: absolute;
@@ -149,11 +155,13 @@
   right: 14px;
   z-index: 10;
   width: 330px;
-  padding: 16px 20px;
+  padding: 20px;
   display: none;
   flex-direction: column;
   gap: 12px;
-  background: rgba(255, 255, 255, 0.92);
+  background: rgba(9, 20, 34, 0.95);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.7), 0 0 20px rgba(2, 132, 199, 0.2);
 }
 
 @media (min-width: 768px) {
@@ -162,7 +170,7 @@
   }
 }
 
-/* Mobile Slide-Up Bottom Sheet for Node Inspection */
+/* Mobile Bottom Sheet */
 .mobile-bottom-sheet-overlay {
   display: none;
   position: fixed;
@@ -170,9 +178,9 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(10, 30, 45, 0.35);
-  backdrop-filter: blur(4px);
-  z-index: var(--z-bottom-sheet);
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(8px);
+  z-index: 300;
   opacity: 0;
   transition: opacity var(--transition-fast);
 }
@@ -184,22 +192,22 @@
 
 .mobile-bottom-sheet {
   position: fixed;
-  bottom: calc(64px + env(safe-area-inset-bottom)); /* Sits above mobile bottom tab bar */
+  bottom: calc(56px + env(safe-area-inset-bottom));
   left: 0;
   width: 100%;
-  max-height: 75vh;
-  background: rgba(255, 255, 255, 0.98);
+  max-height: 80vh;
+  background: rgba(8, 18, 30, 0.98);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
-  border-top: 1px solid var(--glass-border);
+  border-top: 1px solid rgba(56, 189, 248, 0.3);
   border-radius: var(--radius-lg) var(--radius-lg) 0 0;
-  box-shadow: 0 -8px 30px rgba(10, 110, 168, 0.2);
-  z-index: calc(var(--z-bottom-sheet) + 1);
+  box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.7);
+  z-index: 301;
   transform: translateY(110%);
   transition: transform var(--transition-smooth);
   display: flex;
   flex-direction: column;
-  padding: 12px 18px 20px;
+  padding: 14px 18px 24px;
   overflow-y: auto;
 }
 
@@ -213,82 +221,25 @@
   transform: translateY(0);
 }
 
-.sheet-handle {
-  width: 44px;
-  height: 5px;
-  border-radius: 3px;
-  background: rgba(10, 110, 168, 0.25);
-  margin: 0 auto 12px;
-  cursor: grab;
-}
-
-.sheet-header {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 10px;
-  margin-bottom: 12px;
-}
-
-.sheet-title {
-  font-size: var(--text-base);
-  font-weight: 800;
-  color: var(--text-main);
-}
-
-.sheet-subtitle {
-  font-size: var(--text-xs);
-  color: var(--text-muted);
-}
-
-.sheet-meters-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
-  margin-bottom: 14px;
-}
-
-.sheet-meter-box {
-  padding: 10px;
-  background: rgba(230, 243, 250, 0.6);
-  border-radius: var(--radius-sm);
-  border: 1px solid rgba(10, 110, 168, 0.1);
-}
-
-.sheet-meter-label {
-  font-size: 0.72rem;
-  font-weight: 600;
-  color: var(--text-muted);
-  text-transform: uppercase;
-}
-
-.sheet-meter-val {
-  font-size: 1.25rem;
-  font-weight: 800;
-  color: var(--text-main);
-  margin-top: 2px;
-}
-
-/* Custom Leaflet Marker Styling */
+/* Custom Leaflet Marker */
 .pravah-marker {
   display: flex;
   align-items: center;
   justify-content: center;
-  position: relative;
   cursor: pointer;
 }
 
 .pravah-marker-pin {
-  width: 32px;
-  height: 32px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   color: #ffffff;
-  font-size: 0.75rem;
+  font-size: 0.74rem;
   font-weight: 800;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25), 0 0 0 3px #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5), 0 0 0 2px rgba(255, 255, 255, 0.6);
   transition: transform var(--transition-fast);
 }
 
@@ -298,12 +249,16 @@
 
 .marker-safe {
   background: var(--status-safe);
+  box-shadow: 0 0 14px var(--status-safe-glow), 0 0 0 2px #ffffff;
 }
 
 .marker-risk {
   background: var(--status-risk);
+  box-shadow: 0 0 14px var(--status-risk-glow), 0 0 0 2px #ffffff;
 }
 
 .marker-unsafe {
   background: var(--status-unsafe);
+  box-shadow: 0 0 18px var(--status-unsafe-glow), 0 0 0 2px #ffffff;
+  animation: beaconPulse 1.6s infinite;
 }

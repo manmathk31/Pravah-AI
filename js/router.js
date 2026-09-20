@@ -3,19 +3,20 @@
  * Lightweight hash-based view router with parameter parsing and screen lifecycle management.
  */
 
-import { renderLanding } from './screens/landing.js';
-import { renderDashboard } from './screens/dashboard.js';
-import { renderMap } from './screens/map.js';
-import { renderNodeDetail } from './screens/nodeDetail.js';
-import { renderIncidents } from './screens/incidents.js';
-import { renderRouting } from './screens/routing.js';
-import { renderModelHealth } from './screens/modelHealth.js';
-import { renderAbout } from './screens/about.js';
+import { renderLanding } from './screens/landing.js?v=9';
+import { renderDashboard } from './screens/dashboard.js?v=9';
+import { renderMap } from './screens/map.js?v=9';
+import { renderNodeDetail } from './screens/nodeDetail.js?v=9';
+import { renderIncidents } from './screens/incidents.js?v=9';
+import { renderRouting } from './screens/routing.js?v=9';
+import { renderModelHealth } from './screens/modelHealth.js?v=9';
+import { renderAbout } from './screens/about.js?v=9';
 
 export class Router {
   constructor(mountContainerEl, navComponent) {
     this.container = mountContainerEl;
     this.nav = navComponent;
+    this.isFirstRender = true;
     this.routes = {
       'landing': renderLanding,
       'dashboard': renderDashboard,
@@ -60,27 +61,33 @@ export class Router {
     // Update navigation active states
     this.nav?.setActiveRoute(window.location.hash || '#landing');
 
-    // Smooth transition
-    this.container.style.opacity = '0';
-    this.container.style.transform = 'translateY(6px)';
-    this.container.style.transition = 'opacity 140ms ease, transform 140ms ease';
-
-    setTimeout(() => {
+    const executeRender = () => {
       try {
         renderFn(this.container, params);
       } catch (err) {
         console.error(`Error rendering route ${routeName}:`, err);
         this.container.innerHTML = `
-          <div class="glass-panel" style="padding: 32px; text-align: center;">
-            <h2>Unable to load screen</h2>
+          <div class="glass-panel" style="padding: 32px; text-align: center; max-width: 600px; margin: 40px auto;">
+            <h2 style="color: #f87171;">Unable to load screen</h2>
             <p style="color: var(--text-muted); margin-top: 8px;">${err.message}</p>
             <a href="#landing" class="btn btn-primary" style="margin-top: 16px;">Back to Home</a>
           </div>
         `;
       }
-
       this.container.style.opacity = '1';
       this.container.style.transform = 'translateY(0)';
-    }, 140);
+    };
+
+    if (this.isFirstRender) {
+      this.isFirstRender = false;
+      this.container.style.opacity = '1';
+      this.container.style.transform = 'translateY(0)';
+      executeRender();
+    } else {
+      this.container.style.opacity = '0';
+      this.container.style.transform = 'translateY(6px)';
+      this.container.style.transition = 'opacity 140ms ease, transform 140ms ease';
+      setTimeout(executeRender, 140);
+    }
   }
 }

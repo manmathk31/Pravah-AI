@@ -1,126 +1,99 @@
 /* ==========================================================================
-   PravahAi Design Tokens — Light Blue Water & Glassmorphism
-   Mobile-first, fluid clamp scales, accessible contrast ratios
+   PravahAi Design Tokens — Dark Oceanic Cyber-Civic & Frosted Glass
+   Deep navy/midnight palette, glowing accents, comfortable & eye-pleasing
    ========================================================================== */
 
 :root {
-  /* Color Palette: Water & Sky Gradient Foundation */
-  --bg-gradient-start: #f0f8fd;
-  --bg-gradient-mid: #d9eef8;
-  --bg-gradient-end: #c4e5f4;
-  --bg-mesh-1: rgba(30, 167, 219, 0.18);
-  --bg-mesh-2: rgba(127, 220, 235, 0.25);
-  --bg-mesh-3: rgba(10, 110, 168, 0.12);
+  /* Dark Oceanic Atmosphere — Comfortable, Deep & Reassuring */
+  --bg-dark-base: #050a12;
+  --bg-dark-surface: #08121f;
+  --bg-dark-card: #0c1a2c;
+  --bg-dark-elevated: #112338;
+  --bg-dark-highlight: #17304d;
+  --bg-gradient: radial-gradient(ellipse at 50% -20%, #0f2b48 0%, #081422 55%, #04080f 100%);
+  --bg-mesh-glow: radial-gradient(circle at 85% 15%, rgba(14, 165, 233, 0.1) 0%, transparent 60%);
 
-  /* Primary Brand Accents */
-  --accent-primary: #1ea7db;
-  --accent-deep: #0a6ea8;
-  --accent-foam: #7fdceb;
-  --accent-foam-subtle: rgba(127, 220, 235, 0.18);
-  --accent-glow: rgba(30, 167, 219, 0.25);
-  --accent-hover: #1693c4;
+  /* High-Tech Accents — Cyan & Deep Ocean Blues */
+  --accent-cyan: #38bdf8;
+  --accent-cyan-hover: #7dd3fc;
+  --accent-cyan-glow: rgba(56, 189, 248, 0.25);
+  --accent-blue: #0284c7;
+  --accent-blue-hover: #0369a1;
+  --accent-electric: #2563eb;
+  --accent-navy: #1e3a5f;
 
-  /* Status Colors (Soft glow & pill treatments, accessible contrast) */
-  --status-safe: #22a760;
-  --status-safe-glow: rgba(34, 167, 96, 0.25);
-  --status-safe-bg: rgba(34, 167, 96, 0.12);
-  --status-safe-border: rgba(34, 167, 96, 0.35);
+  /* Comfortable Dark Emerald & Forest Greens */
+  --accent-emerald: #10b981;
+  --accent-emerald-glow: rgba(16, 185, 129, 0.25);
+  --accent-teal: #0d9488;
+  --accent-green-deep: #064e3b;
 
-  --status-risk: #e08b00;
-  --status-risk-glow: rgba(224, 139, 0, 0.28);
-  --status-risk-bg: rgba(224, 139, 0, 0.14);
-  --status-risk-border: rgba(224, 139, 0, 0.35);
+  /* Status Colors: Vivid Emerald, Ruby Red & Gold */
+  --status-safe: #10b981;
+  --status-safe-bg: rgba(16, 185, 129, 0.12);
+  --status-safe-border: rgba(16, 185, 129, 0.4);
+  --status-safe-glow: rgba(16, 185, 129, 0.3);
 
-  --status-unsafe: #d9383e;
-  --status-unsafe-glow: rgba(217, 56, 62, 0.32);
-  --status-unsafe-bg: rgba(217, 56, 62, 0.14);
-  --status-unsafe-border: rgba(217, 56, 62, 0.4);
+  --status-risk: #f59e0b;
+  --status-risk-bg: rgba(245, 158, 11, 0.12);
+  --status-risk-border: rgba(245, 158, 11, 0.4);
+  --status-risk-glow: rgba(245, 158, 11, 0.25);
 
-  /* LoRa Offline Mode Overrides */
-  --lora-accent: #e67e22;
-  --lora-accent-glow: rgba(230, 126, 34, 0.3);
-  --lora-banner-bg: #2d3748;
-  --lora-banner-text: #f7fafc;
+  --status-unsafe: #ef4444;
+  --status-unsafe-bg: rgba(239, 68, 68, 0.15);
+  --status-unsafe-border: rgba(239, 68, 68, 0.45);
+  --status-unsafe-glow: rgba(239, 68, 68, 0.35);
 
-  /* High Contrast Typography */
-  --text-main: #0c1f2e;          /* Minimum 6.5:1 contrast over glass */
-  --text-secondary: #243e52;     /* Minimum 4.8:1 contrast over glass */
-  --text-muted: #48667c;         /* Readable captions */
-  --text-on-accent: #ffffff;
+  /* Contrast Typography — Soothing, Clear & High Legibility */
+  --text-primary: #f8fafc;        /* High-contrast crisp white */
+  --text-secondary: #cbd5e1;      /* Crisp light slate */
+  --text-muted: #8295ab;          /* Soft readable gray-blue */
+  --text-dim: #4b617a;
+  --text-white: #ffffff;
 
-  /* Glass Surface Tokens */
-  --glass-bg: rgba(255, 255, 255, 0.62);
-  --glass-bg-subtle: rgba(255, 255, 255, 0.42);
-  --glass-bg-elevated: rgba(255, 255, 255, 0.78);
-  --glass-border: rgba(255, 255, 255, 0.75);
-  --glass-border-subtle: rgba(255, 255, 255, 0.45);
-  --glass-highlight: inset 0 1px 1px 0 rgba(255, 255, 255, 0.9);
-  --glass-blur: 20px;
-  --glass-blur-mobile: 12px;
+  /* Frosted Dark Glass Surfaces */
+  --glass-bg: rgba(12, 24, 38, 0.7);
+  --glass-bg-hover: rgba(16, 32, 50, 0.85);
+  --glass-bg-elevated: rgba(15, 30, 48, 0.88);
+  --glass-bg-card: rgba(11, 23, 36, 0.65);
+  --glass-border: rgba(56, 189, 248, 0.14);
+  --glass-border-hover: rgba(56, 189, 248, 0.45);
+  --glass-border-subtle: rgba(255, 255, 255, 0.08);
+  --glass-highlight: inset 0 1px 1px 0 rgba(255, 255, 255, 0.12);
+  --glass-blur: 24px;
+  --glass-blur-mobile: 14px;
 
-  /* Layered Ambient Shadows */
-  --shadow-sm: 0 2px 8px rgba(10, 110, 168, 0.08);
-  --shadow-md: 0 6px 20px rgba(10, 110, 168, 0.1), 0 2px 4px rgba(0, 0, 0, 0.04);
-  --shadow-lg: 0 14px 34px rgba(10, 110, 168, 0.14), 0 3px 8px rgba(0, 0, 0, 0.06);
-  --shadow-glow: 0 0 24px rgba(30, 167, 219, 0.3);
-  --shadow-floating: 0 20px 40px rgba(10, 80, 130, 0.18), 0 4px 10px rgba(0, 0, 0, 0.05);
+  /* Soft Ambient Glows & Shadows */
+  --shadow-xs: 0 1px 3px rgba(0, 0, 0, 0.4);
+  --shadow-sm: 0 4px 14px rgba(0, 0, 0, 0.35);
+  --shadow-md: 0 10px 30px -4px rgba(0, 0, 0, 0.5), 0 2px 8px rgba(2, 132, 199, 0.08);
+  --shadow-lg: 0 20px 45px -8px rgba(0, 0, 0, 0.65), 0 0 25px rgba(2, 132, 199, 0.15);
+  --shadow-cyan-glow: 0 0 30px rgba(56, 189, 248, 0.25);
 
-  /* Corner Radius (Tightened for mobile, generous for desktop) */
-  --radius-xs: 8px;
-  --radius-sm: 12px;
-  --radius-md: 18px;
+  /* Radius */
+  --radius-xs: 6px;
+  --radius-sm: 10px;
+  --radius-md: 16px;
   --radius-lg: 24px;
   --radius-xl: 32px;
   --radius-full: 9999px;
 
-  /* Fluid Typography Scales */
-  --font-family-base: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, sans-serif;
-  --font-family-mono: 'JetBrains Mono', 'SF Mono', Consolas, monospace;
+  /* Typography */
+  --font-family-base: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+  --font-family-mono: 'JetBrains Mono', 'SF Mono', monospace;
 
-  --text-xs: clamp(0.72rem, 0.68rem + 0.2vw, 0.8rem);
-  --text-sm: clamp(0.82rem, 0.78rem + 0.25vw, 0.92rem);
-  --text-base: clamp(0.94rem, 0.90rem + 0.2vw, 1.05rem);
-  --text-lg: clamp(1.10rem, 1.02rem + 0.4vw, 1.25rem);
-  --text-xl: clamp(1.25rem, 1.15rem + 0.6vw, 1.55rem);
-  --text-2xl: clamp(1.50rem, 1.35rem + 0.9vw, 1.95rem);
-  --text-3xl: clamp(1.85rem, 1.60rem + 1.4vw, 2.55rem);
-  --text-hero: clamp(2.20rem, 1.80rem + 2.2vw, 3.60rem);
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 0.975rem;
+  --text-lg: 1.15rem;
+  --text-xl: 1.35rem;
+  --text-2xl: 1.75rem;
+  --text-3xl: 2.25rem;
+  --text-hero: clamp(2.3rem, 1.8rem + 2.5vw, 3.8rem);
 
-  /* Spacing Scale */
-  --space-1: 4px;
-  --space-2: 8px;
-  --space-3: 12px;
-  --space-4: 16px;
-  --space-5: 20px;
-  --space-6: 24px;
-  --space-8: 32px;
-  --space-10: 40px;
-  --space-12: 48px;
-  --space-16: 64px;
-
-  /* Z-Index Hierarchy */
-  --z-bg: 0;
-  --z-base: 1;
-  --z-glass: 10;
-  --z-nav: 100;
-  --z-floating: 200;
-  --z-bottom-sheet: 300;
-  --z-drawer: 400;
-  --z-modal: 500;
-  --z-toast: 600;
-
-  /* Transition Speeds */
-  --transition-fast: 160ms cubic-bezier(0.16, 1, 0.3, 1);
-  --transition-base: 280ms cubic-bezier(0.16, 1, 0.3, 1);
-  --transition-smooth: 450ms cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-/* Reduced Motion Override */
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
+  /* Transitions */
+  --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-fast: 160ms var(--ease-spring);
+  --transition-base: 280ms var(--ease-spring);
+  --transition-smooth: 420ms var(--ease-spring);
 }

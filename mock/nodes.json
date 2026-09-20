@@ -16,10 +16,10 @@
     "battery_pct": 94,
     "solar_w": 18.2,
     "lora_rssi": -74,
-    "edge_device": "Jetson Orin Nano (Edge-01)",
+    "edge_device": "Station Computer #01",
     "last_ping": "12s ago",
     "camera_health": "OPTIMAL",
-    "road_impact": "Promenade Service Lane (Open)",
+    "road_impact": "Service Lane is Open & Safe",
     "elevation_m": 548.2
   },
   {
@@ -39,10 +39,10 @@
     "battery_pct": 89,
     "solar_w": 6.4,
     "lora_rssi": -81,
-    "edge_device": "RK3588 NPU (Edge-02)",
+    "edge_device": "Station Computer #02",
     "last_ping": "4s ago",
     "camera_health": "LIGHT_SPLASH",
-    "road_impact": "Underpass Lane B (Advisory Reduced Speed)",
+    "road_impact": "Right Lane Waterlogged — Slow Down to 25 km/h",
     "elevation_m": 539.1
   },
   {
@@ -62,10 +62,10 @@
     "battery_pct": 91,
     "solar_w": 4.1,
     "lora_rssi": -79,
-    "edge_device": "Jetson Orin Nano (Edge-03)",
+    "edge_device": "Station Computer #03",
     "last_ping": "2s ago",
     "camera_health": "WATER_PONDING",
-    "road_impact": "Causeway Arterial (Imminent Closure)",
+    "road_impact": "Road Closing Soon — Please Detour via Ridge Highway",
     "elevation_m": 536.8
   },
   {
@@ -85,10 +85,10 @@
     "battery_pct": 98,
     "solar_w": 21.0,
     "lora_rssi": -69,
-    "edge_device": "Coral Edge TPU (Edge-04)",
+    "edge_device": "Station Computer #04",
     "last_ping": "18s ago",
     "camera_health": "OPTIMAL",
-    "road_impact": "Factory Link Road (Normal)",
+    "road_impact": "Factory Link Road is Clear & Safe",
     "elevation_m": 552.4
   },
   {
@@ -108,10 +108,10 @@
     "battery_pct": 82,
     "solar_w": 14.5,
     "lora_rssi": -86,
-    "edge_device": "RK3588 NPU (Edge-05)",
+    "edge_device": "Station Computer #05",
     "last_ping": "32s ago",
     "camera_health": "OPTIMAL",
-    "road_impact": "Trunk Link (Clear)",
+    "road_impact": "Old Trunk Road is Clear & Dry",
     "elevation_m": 558.0
   },
   {
@@ -131,10 +131,10 @@
     "battery_pct": 96,
     "solar_w": 19.8,
     "lora_rssi": -72,
-    "edge_device": "Jetson Orin Nano (Edge-06)",
+    "edge_device": "Station Computer #06",
     "last_ping": "9s ago",
     "camera_health": "OPTIMAL",
-    "road_impact": "Ridge Highway (Dry & High)",
+    "road_impact": "Ridge Highway is Elevated & Completely Dry",
     "elevation_m": 584.5
   }
 ]

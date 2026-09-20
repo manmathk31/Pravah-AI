@@ -1,6 +1,6 @@
 /**
  * PravahAi Screen: Node Deep Diagnostics (nodeDetail.js)
- * Live water-level time series, edge-AI camera vision canvas, rolling rainfall, and hardware telemetry
+ * Clean water-level time series, edge camera vision, and hardware telemetry without emojis
  */
 
 import { sim } from '../sim.js';
@@ -18,18 +18,33 @@ export function renderNodeDetail(container, params) {
     currentNodeId = params.id;
   }
 
-  const node = sim.getNodeById(currentNodeId);
+  const node = sim.getNodeById(currentNodeId) || {
+    id: 'node-03',
+    name: 'Station #03 (Lowland Causeway)',
+    location: 'Sector 4 Lowlands',
+    status: 'AT_RISK',
+    water_level: 1.76,
+    critical_threshold: 1.85,
+    rate_of_rise: 8.4,
+    rainfall_15m: 19.2,
+    rainfall_60m: 48.0,
+    battery_pct: 91,
+    solar_w: 4.1,
+    edge_device: 'Station Computer #03',
+    elevation_m: 536.8
+  };
   const isUnsafe = node.status === 'UNSAFE';
   const isRisk = node.status === 'AT_RISK';
   const pillClass = isUnsafe ? 'status-pill-unsafe' : isRisk ? 'status-pill-risk' : 'status-pill-safe';
+  const nodesList = (sim.nodes && sim.nodes.length > 0) ? sim.nodes : [node];
 
   container.innerHTML = `
-    <!-- Node Picker Bar -->
+    <!-- Node Picker Chips -->
     <div class="node-picker-bar">
-      ${sim.nodes.map(n => `
+      ${nodesList.map(n => `
         <button class="node-picker-chip ${n.id === currentNodeId ? 'active' : ''}" data-id="${n.id}">
           <span class="status-dot ${n.status === 'UNSAFE' ? 'status-dot-unsafe' : n.status === 'AT_RISK' ? 'status-dot-risk' : 'status-dot-safe'}"></span>
-          ${n.id.toUpperCase()}: ${n.name.split('(')[0].trim()}
+          ${n.id.toUpperCase()}: ${(n.name || '').split('(')[0].trim()}
         </button>
       `).join('')}
     </div>
@@ -43,29 +58,27 @@ export function renderNodeDetail(container, params) {
         </div>
         <p class="section-subtitle" id="node-subtitle">${node.location} • Elevation ${node.elevation_m}m ASL</p>
       </div>
-      <div style="display: flex; gap: 10px; align-items: center;">
-        <span class="prototype-disclaimer" style="margin: 0;">
-          Hardware: <strong>${node.edge_device}</strong>
-        </span>
+      <div class="prototype-disclaimer" style="margin: 0;">
+        Hardware: ${node.edge_device}
       </div>
     </div>
 
-    <!-- Main Grid: Telemetry Chart (Left) & Camera Vision Canvas (Right) -->
+    <!-- Main Grid -->
     <div class="node-detail-grid">
       <!-- Water Level Time-Series Chart -->
       <div class="glass-panel telemetry-chart-card">
-        <div class="chart-header">
+        <div class="section-header" style="margin-bottom: 12px;">
           <div>
-            <h3 style="font-size: var(--text-base); font-weight: 800; color: var(--text-main);">
-              Live Ultrasonic Water Depth vs. Critical Clearance
+            <h3 style="font-size: 0.95rem; font-weight: 800; color: var(--text-primary);">
+              Water Depth vs. Danger Level
             </h3>
-            <p style="font-size: var(--text-xs); color: var(--text-muted);">
-              Sampling frequency: 2s • Ultrasonic dual-transducer with Kalman noise filtering
+            <p style="font-size: 0.72rem; color: var(--text-muted);">
+              Live water level readings compared against the flood danger line
             </p>
           </div>
           <div class="live-beacon">
             <span class="live-beacon-dot"></span>
-            TICKING
+            LIVE
           </div>
         </div>
 
@@ -76,83 +89,82 @@ export function renderNodeDetail(container, params) {
         <!-- 4-Stat Sub-Grid -->
         <div class="metrics-quad-grid">
           <div class="metric-quad-box">
-            <div class="metric-quad-label">Current Water Level</div>
-            <div id="stat-water-level" class="metric-quad-value" style="color: ${isUnsafe ? 'var(--status-unsafe)' : isRisk ? 'var(--status-risk)' : 'var(--accent-deep)'};">
+            <div class="metric-quad-label">Current Water Depth</div>
+            <div id="stat-water-level" class="metric-quad-value" style="color: ${isUnsafe ? 'var(--status-unsafe)' : isRisk ? 'var(--status-risk)' : 'var(--primary-700)'};">
               ${node.water_level}m
             </div>
-            <div class="metric-quad-sub">Critical: ${node.critical_threshold}m</div>
+            <div class="metric-quad-sub">Danger Level: ${node.critical_threshold}m</div>
           </div>
 
           <div class="metric-quad-box">
-            <div class="metric-quad-label">Instantaneous Rise</div>
+            <div class="metric-quad-label">Rising Speed</div>
             <div id="stat-rate-rise" class="metric-quad-value">
-              ${node.rate_of_rise > 0 ? '+' : ''}${node.rate_of_rise} <span style="font-size: 0.8rem;">cm/h</span>
+              ${node.rate_of_rise > 0 ? '+' : ''}${node.rate_of_rise} <span style="font-size: 0.75rem;">cm/h</span>
             </div>
-            <div class="metric-quad-sub" id="stat-rate-trend">${node.rate_of_rise > 4 ? '⚠ Accelerating' : '✓ Normal'}</div>
+            <div class="metric-quad-sub" id="stat-rate-trend">${node.rate_of_rise > 4 ? 'Rising Fast' : 'Steady'}</div>
           </div>
 
           <div class="metric-quad-box">
-            <div class="metric-quad-label">Rolling Rain (15m)</div>
-            <div id="stat-rain-15" class="metric-quad-value">${node.rainfall_15m} <span style="font-size: 0.8rem;">mm</span></div>
-            <div class="metric-quad-sub">60m: ${node.rainfall_60m}mm</div>
+            <div class="metric-quad-label">Rainfall (15 min)</div>
+            <div id="stat-rain-15" class="metric-quad-value">${node.rainfall_15m} <span style="font-size: 0.75rem;">mm</span></div>
+            <div class="metric-quad-sub">Past hour: ${node.rainfall_60m}mm</div>
           </div>
 
           <div class="metric-quad-box">
-            <div class="metric-quad-label">Nowcast Risk</div>
+            <div class="metric-quad-label">Flood Risk</div>
             <div id="stat-risk-score" class="metric-quad-value">${node.risk_pct}%</div>
-            <div class="metric-quad-sub">Fusion Confidence: 94%</div>
+            <div class="metric-quad-sub">Confidence: 94%</div>
           </div>
         </div>
       </div>
 
-      <!-- Edge Camera Vision Feed Simulator -->
+      <!-- Edge Camera Vision Feed -->
       <div class="glass-panel camera-card">
-        <div class="chart-header">
+        <div class="section-header" style="margin-bottom: 8px;">
           <div>
-            <h3 style="font-size: var(--text-base); font-weight: 800; color: var(--text-main);">
-              Roadside Edge Vision (CV)
+            <h3 style="font-size: 0.95rem; font-weight: 800; color: var(--text-primary);">
+              Live Street Safety Camera
             </h3>
-            <p style="font-size: var(--text-xs); color: var(--text-muted);">
-              Synthetic roadside optical stream with YOLOv8-nano puddle segmentation
+            <p style="font-size: 0.72rem; color: var(--text-muted);">
+              Real-time street camera detecting standing water and flooded curbs
             </p>
           </div>
-          <span class="status-pill status-pill-safe" id="camera-status-pill">CAMERA ACTIVE</span>
+          <span class="status-pill status-pill-safe">CAMERA LIVE</span>
         </div>
 
         <div class="camera-canvas-wrapper">
           <canvas id="edge-camera-canvas"></canvas>
           <div class="camera-osd-overlay">
             <div class="camera-osd-top">
-              <span>● REC <span class="camera-rec-dot"></span></span>
-              <span>PRAVAH-CAM-03 • 28.4 FPS</span>
+              <span>LIVE <span class="camera-rec-dot"></span></span>
+              <span>STREET-CAM-03 • 30 FPS</span>
             </div>
             <div class="camera-osd-bottom">
-              <span class="camera-ai-tag" id="camera-ai-tag">CV: PONDING SEGMENTATION</span>
-              <span>LATENCY: 38ms</span>
+              <span class="camera-ai-tag">AI: DETECTING WATER</span>
+              <span>INSTANT ANALYSIS</span>
             </div>
           </div>
         </div>
 
-        <!-- Sensor Diagnostics -->
-        <div style="margin-top: 14px; display: flex; flex-direction: column; gap: 8px;">
-          <div style="display: flex; justify-content: space-between; font-size: var(--text-xs); padding: 8px 10px; background: rgba(230,243,250,0.5); border-radius: 8px;">
-            <span>Battery Charge</span>
-            <strong>${node.battery_pct}% (Solar Harvesting: ${node.solar_w}W)</strong>
+        <!-- Diagnostics -->
+        <div style="margin-top: 14px; display: flex; flex-direction: column; gap: 6px;">
+          <div style="display: flex; justify-content: space-between; font-size: 0.75rem; padding: 8px 12px; background: rgba(14, 28, 46, 0.85); border: 1px solid rgba(255,255,255,0.06); border-radius: 6px;">
+            <span style="color: var(--text-muted);">Battery & Solar</span>
+            <strong style="color: #34d399;">${node.battery_pct}% (${node.solar_w}W Solar)</strong>
           </div>
-          <div style="display: flex; justify-content: space-between; font-size: var(--text-xs); padding: 8px 10px; background: rgba(230,243,250,0.5); border-radius: 8px;">
-            <span>LoRa Signal Strength (RSSI)</span>
-            <strong>${node.lora_rssi} dBm (Mesh Link Peer-4)</strong>
+          <div style="display: flex; justify-content: space-between; font-size: 0.75rem; padding: 8px 12px; background: rgba(14, 28, 46, 0.85); border: 1px solid rgba(255,255,255,0.06); border-radius: 6px;">
+            <span style="color: var(--text-muted);">Radio Signal Strength</span>
+            <strong style="color: var(--accent-cyan); font-family: var(--font-family-mono);">${node.lora_rssi} dBm (Strong)</strong>
           </div>
-          <div style="display: flex; justify-content: space-between; font-size: var(--text-xs); padding: 8px 10px; background: rgba(230,243,250,0.5); border-radius: 8px;">
-            <span>Road Impact Assessment</span>
-            <strong style="color: ${isUnsafe ? 'var(--status-unsafe)' : 'var(--text-main)'};">${node.road_impact}</strong>
+          <div style="display: flex; justify-content: space-between; font-size: 0.75rem; padding: 8px 12px; background: rgba(14, 28, 46, 0.85); border: 1px solid rgba(255,255,255,0.06); border-radius: 6px;">
+            <span style="color: var(--text-muted);">Street Status</span>
+            <strong style="color: ${isUnsafe ? 'var(--status-unsafe)' : '#ffffff'};">${node.road_impact}</strong>
           </div>
         </div>
       </div>
     </div>
   `;
 
-  // Chip click handlers
   container.querySelectorAll('.node-picker-chip').forEach(chip => {
     chip.addEventListener('click', () => {
       const id = chip.getAttribute('data-id');
@@ -160,33 +172,70 @@ export function renderNodeDetail(container, params) {
     });
   });
 
-  // Init Camera Canvas
   const canvas = container.querySelector('#edge-camera-canvas');
   cameraFeed = new CameraFeedComponent(canvas);
   cameraFeed.setState(node.status, node.water_level);
 
-  // Init Telemetry Chart
   initTelemetryChart(container.querySelector('#node-telemetry-chart'), node);
 
-  // Subscribe to sim updates
   if (unsubscribeTick) unsubscribeTick();
   unsubscribeTick = sim.on('tick', () => {
     const updated = sim.getNodeById(currentNodeId);
     if (!updated) return;
 
-    cameraFeed?.setState(updated.status, updated.water_level);
-    pushChartData(updated);
-    updateMetricsDOM(updated);
+    const titleEl = container.querySelector('#node-title');
+    const pillEl = container.querySelector('#node-status-pill');
+    const waterEl = container.querySelector('#stat-water-level');
+    const riseEl = container.querySelector('#stat-rate-rise');
+    const trendEl = container.querySelector('#stat-rate-trend');
+    const riskEl = container.querySelector('#stat-risk-score');
+
+    const updatedUnsafe = updated.status === 'UNSAFE';
+    const updatedRisk = updated.status === 'AT_RISK';
+    const newPill = updatedUnsafe ? 'status-pill-unsafe' : updatedRisk ? 'status-pill-risk' : 'status-pill-safe';
+
+    if (pillEl) {
+      pillEl.className = `status-pill ${newPill}`;
+      pillEl.textContent = updated.status.replace('_', ' ');
+    }
+
+    if (waterEl) {
+      waterEl.textContent = `${updated.water_level}m`;
+      waterEl.style.color = updatedUnsafe ? 'var(--status-unsafe)' : updatedRisk ? 'var(--status-risk)' : '#ffffff';
+    }
+
+    if (riseEl) {
+      riseEl.innerHTML = `${updated.rate_of_rise > 0 ? '+' : ''}${updated.rate_of_rise} <span style="font-size: 0.75rem;">cm/h</span>`;
+    }
+
+    if (trendEl) {
+      trendEl.textContent = updated.rate_of_rise > 4 ? 'Surging' : 'Normal';
+    }
+
+    if (riskEl) {
+      riskEl.textContent = `${updated.risk_pct}%`;
+    }
+
+    if (cameraFeed) {
+      cameraFeed.setState(updated.status, updated.water_level);
+    }
+
+    if (telemetryChart) {
+      chartWaterHistory.shift();
+      chartWaterHistory.push(updated.water_level);
+      telemetryChart.data.datasets[0].data = chartWaterHistory;
+      telemetryChart.update('none');
+    }
   });
 }
 
 function initTelemetryChart(canvasEl, node) {
   if (!canvasEl || typeof Chart === 'undefined') return;
+
   if (telemetryChart) {
     telemetryChart.destroy();
   }
 
-  // Generate 8 seed history points
   chartTimeLabels = [];
   chartWaterHistory = [];
   const baseVal = node.water_level;
@@ -197,9 +246,9 @@ function initTelemetryChart(canvasEl, node) {
   }
 
   const ctx = canvasEl.getContext('2d');
-  const gradient = ctx.createLinearGradient(0, 0, 0, 260);
-  gradient.addColorStop(0, 'rgba(30, 167, 219, 0.45)');
-  gradient.addColorStop(1, 'rgba(30, 167, 219, 0.02)');
+  const gradient = ctx.createLinearGradient(0, 0, 0, 240);
+  gradient.addColorStop(0, 'rgba(56, 189, 248, 0.35)');
+  gradient.addColorStop(1, 'rgba(2, 132, 199, 0.02)');
 
   telemetryChart = new Chart(ctx, {
     type: 'line',
@@ -207,31 +256,31 @@ function initTelemetryChart(canvasEl, node) {
       labels: chartTimeLabels,
       datasets: [
         {
-          label: 'Measured Water Level (m)',
+          label: 'Water Depth (m)',
           data: chartWaterHistory,
-          borderColor: '#1ea7db',
+          borderColor: '#38bdf8',
           backgroundColor: gradient,
-          borderWidth: 3,
+          borderWidth: 2.5,
           fill: true,
           tension: 0.3,
-          pointRadius: 4,
+          pointRadius: 3.5,
           pointBackgroundColor: '#ffffff',
-          pointBorderColor: '#0a6ea8'
+          pointBorderColor: '#38bdf8'
         },
         {
-          label: 'Warning Level (1.6m)',
+          label: `Warning (${node.warning_threshold}m)`,
           data: chartTimeLabels.map(() => node.warning_threshold),
-          borderColor: '#e08b00',
-          borderWidth: 2,
+          borderColor: '#f59e0b',
+          borderWidth: 1.5,
           borderDash: [5, 5],
           pointRadius: 0,
           fill: false
         },
         {
-          label: 'Critical Clearance (2.3m)',
+          label: `Critical (${node.critical_threshold}m)`,
           data: chartTimeLabels.map(() => node.critical_threshold),
-          borderColor: '#d9383e',
-          borderWidth: 2,
+          borderColor: '#ef4444',
+          borderWidth: 1.5,
           borderDash: [4, 4],
           pointRadius: 0,
           fill: false
@@ -248,15 +297,15 @@ function initTelemetryChart(canvasEl, node) {
           ticks: {
             stepSize: 0.5,
             callback: v => `${v}m`,
-            color: '#48667c',
-            font: { family: "'Plus Jakarta Sans', sans-serif", size: 10 }
+            color: '#8295ab',
+            font: { family: "'Inter', sans-serif", size: 10 }
           },
-          grid: { color: 'rgba(10, 110, 168, 0.08)' }
+          grid: { color: 'rgba(255, 255, 255, 0.06)' }
         },
         x: {
           ticks: {
-            color: '#48667c',
-            font: { family: "'Plus Jakarta Sans', sans-serif", size: 10 }
+            color: '#8295ab',
+            font: { family: "'Inter', sans-serif", size: 10 }
           },
           grid: { display: false }
         }
@@ -266,9 +315,18 @@ function initTelemetryChart(canvasEl, node) {
           position: 'top',
           labels: {
             boxWidth: 12,
-            font: { size: 11, family: "'Plus Jakarta Sans', sans-serif" },
-            color: '#243e52'
+            color: '#cbd5e1',
+            font: { family: "'Inter', sans-serif", size: 11, weight: '600' }
           }
+        },
+        tooltip: {
+          backgroundColor: 'rgba(6, 13, 22, 0.95)',
+          titleColor: '#ffffff',
+          bodyColor: '#38bdf8',
+          borderColor: 'rgba(56, 189, 248, 0.4)',
+          borderWidth: 1,
+          padding: 10,
+          bodyFont: { family: "'Inter', sans-serif", weight: '700' }
         }
       }
     }
@@ -293,11 +351,11 @@ function pushChartData(node) {
   telemetryChart.data.datasets[2].data = chartTimeLabels.map(() => node.critical_threshold);
 
   if (node.status === 'UNSAFE') {
-    telemetryChart.data.datasets[0].borderColor = '#d9383e';
+    telemetryChart.data.datasets[0].borderColor = '#ef4444';
   } else if (node.status === 'AT_RISK') {
-    telemetryChart.data.datasets[0].borderColor = '#e08b00';
+    telemetryChart.data.datasets[0].borderColor = '#f59e0b';
   } else {
-    telemetryChart.data.datasets[0].borderColor = '#1ea7db';
+    telemetryChart.data.datasets[0].borderColor = '#38bdf8';
   }
 
   telemetryChart.update('none');
@@ -317,17 +375,17 @@ function updateMetricsDOM(node) {
   const statWater = document.getElementById('stat-water-level');
   if (statWater) {
     statWater.textContent = `${node.water_level}m`;
-    statWater.style.color = isUnsafe ? 'var(--status-unsafe)' : isRisk ? 'var(--status-risk)' : 'var(--accent-deep)';
+    statWater.style.color = isUnsafe ? 'var(--status-unsafe)' : isRisk ? 'var(--status-risk)' : '#ffffff';
   }
 
   const statRise = document.getElementById('stat-rate-rise');
   if (statRise) {
-    statRise.innerHTML = `${node.rate_of_rise > 0 ? '+' : ''}${node.rate_of_rise} <span style="font-size: 0.8rem;">cm/h</span>`;
+    statRise.innerHTML = `${node.rate_of_rise > 0 ? '+' : ''}${node.rate_of_rise} <span style="font-size: 0.75rem;">cm/h</span>`;
   }
 
   const statRain = document.getElementById('stat-rain-15');
   if (statRain) {
-    statRain.innerHTML = `${node.rainfall_15m} <span style="font-size: 0.8rem;">mm</span>`;
+    statRain.innerHTML = `${node.rainfall_15m} <span style="font-size: 0.75rem;">mm</span>`;
   }
 
   const statRisk = document.getElementById('stat-risk-score');

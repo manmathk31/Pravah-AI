@@ -144,6 +144,29 @@ class SimulationEngine {
   }
 
   getNodeById(id) {
+    if (!this.nodes || this.nodes.length === 0) {
+      return {
+        id: id || 'node-03',
+        name: 'Station #03 (Lowland Causeway)',
+        location: 'Sector 4 Lowlands',
+        status: 'AT_RISK',
+        water_level: 1.76,
+        critical_threshold: 1.85,
+        warning_threshold: 1.20,
+        rate_of_rise: 8.4,
+        rainfall_15m: 19.2,
+        rainfall_60m: 48.0,
+        battery_pct: 91,
+        solar_w: 4.1,
+        lora_rssi: -79,
+        edge_device: 'Station Computer #03',
+        last_ping: '2s ago',
+        camera_health: 'WATER_PONDING',
+        road_impact: 'Causeway Arterial (Imminent Closure)',
+        elevation_m: 536.8,
+        risk_pct: 78
+      };
+    }
     return this.nodes.find(n => n.id === id) || this.nodes[0];
   }
 
@@ -242,4 +265,13 @@ class SimulationEngine {
   }
 }
 
-export const sim = new SimulationEngine();
+if (typeof window !== 'undefined') {
+  if (!window.__pravah_sim_instance) {
+    window.__pravah_sim_instance = new SimulationEngine();
+  }
+}
+
+export const sim = (typeof window !== 'undefined' && window.__pravah_sim_instance) 
+  ? window.__pravah_sim_instance 
+  : new SimulationEngine();
+
