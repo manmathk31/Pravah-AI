@@ -48,6 +48,12 @@ body {
   z-index: 0;
 }
 
+@media (max-width: 768px) {
+  #ambient-canvas {
+    display: none !important;
+  }
+}
+
 #app-shell {
   display: flex;
   flex-direction: column;
