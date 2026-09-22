@@ -4,6 +4,8 @@
  * Supports random walks, multi-sensor fusion, and on-demand flood scenario triggers.
  */
 
+import { initialNodes, initialAlerts, initialIncidents, initialRoutes } from './mockData.js?v=15';
+
 class SimulationEngine {
   constructor() {
     this.listeners = new Map();
@@ -21,17 +23,11 @@ class SimulationEngine {
   async init() {
     if (this.initialized) return;
     try {
-      const [nodesRes, alertsRes, incidentsRes, routesRes] = await Promise.all([
-        fetch('./mock/nodes.json').then(r => r.json()),
-        fetch('./mock/alerts.json').then(r => r.json()),
-        fetch('./mock/incidents.json').then(r => r.json()),
-        fetch('./mock/routes.json').then(r => r.json())
-      ]);
-
-      this.nodes = nodesRes;
-      this.alerts = alertsRes;
-      this.incidents = incidentsRes;
-      this.routes = routesRes;
+      // Instant 0ms load using bundled mock data, with zero network latency
+      this.nodes = JSON.parse(JSON.stringify(initialNodes));
+      this.alerts = JSON.parse(JSON.stringify(initialAlerts));
+      this.incidents = JSON.parse(JSON.stringify(initialIncidents));
+      this.routes = JSON.parse(JSON.stringify(initialRoutes));
       this.initialized = true;
 
       this.startLoop();

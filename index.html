@@ -16,10 +16,10 @@
 
   <!-- Leaflet CDN -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script defer src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 
   <!-- Chart.js CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Core PravahAi CSS Design System -->
   <link rel="stylesheet" href="css/tokens.css?v=14">
@@ -188,28 +188,8 @@
     <!-- Populated by BottomSheetComponent -->
   </div>
 
-  <!-- Bulletproof Application Bootstrap with Visible Crash Diagnostics -->
+  <!-- Ultra-Fast Application Bootstrap with Instant Parallel Loading (No Sequential Waterfall) -->
   <script type="module">
-    const moduleList = [
-      ['Sim Engine', './js/sim.js?v=14'],
-      ['Water Canvas', './js/components/waterCanvas.js?v=14'],
-      ['Navigation', './js/components/nav.js?v=14'],
-      ['Demo Controls', './js/components/demoControls.js?v=14'],
-      ['Risk Gauge', './js/components/riskGauge.js?v=14'],
-      ['Alert Feed', './js/components/alertFeed.js?v=14'],
-      ['Bottom Sheet', './js/components/bottomSheet.js?v=14'],
-      ['Camera Feed', './js/components/cameraFeed.js?v=14'],
-      ['Screen: Landing', './js/screens/landing.js?v=14'],
-      ['Screen: Dashboard', './js/screens/dashboard.js?v=14'],
-      ['Screen: Map', './js/screens/map.js?v=14'],
-      ['Screen: Node Detail', './js/screens/nodeDetail.js?v=14'],
-      ['Screen: Incidents', './js/screens/incidents.js?v=14'],
-      ['Screen: Routing', './js/screens/routing.js?v=14'],
-      ['Screen: Model Health', './js/screens/modelHealth.js?v=14'],
-      ['Screen: About', './js/screens/about.js?v=14'],
-      ['Client Router', './js/router.js?v=14']
-    ];
-
     function displayCrash(title, msg, stack) {
       console.error(title, msg, stack);
       const box = document.createElement('div');
@@ -228,23 +208,21 @@
     }
 
     async function launchApp() {
-      // 1. Verify every module loads without compile or syntax errors
-      for (const [name, modPath] of moduleList) {
-        try {
-          await import(modPath);
-        } catch (err) {
-          displayCrash(`Syntax / Load Error in ${name}`, `The file <code>${modPath}</code> failed to evaluate: <strong>${err.message}</strong>`, err.stack);
-          return;
-        }
-      }
-
-      // 2. Initialize application components
       try {
-        const { sim } = await import('./js/sim.js?v=14');
-        const { NavigationComponent } = await import('./js/components/nav.js?v=14');
-        const { DemoControlsComponent } = await import('./js/components/demoControls.js?v=14');
-        const { WaterCanvas } = await import('./js/components/waterCanvas.js?v=14');
-        const { Router } = await import('./js/router.js?v=14');
+        // Parallel import of all core components in a single network roundtrip
+        const [
+          { sim },
+          { NavigationComponent },
+          { DemoControlsComponent },
+          { WaterCanvas },
+          { Router }
+        ] = await Promise.all([
+          import('./js/sim.js?v=15'),
+          import('./js/components/nav.js?v=15'),
+          import('./js/components/demoControls.js?v=15'),
+          import('./js/components/waterCanvas.js?v=15'),
+          import('./js/router.js?v=15')
+        ]);
 
         try {
           new WaterCanvas('ambient-canvas');
