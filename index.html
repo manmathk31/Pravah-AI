@@ -22,20 +22,20 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <!-- Core PravahAi CSS Design System -->
-  <link rel="stylesheet" href="css/tokens.css?v=5">
-  <link rel="stylesheet" href="css/glass.css?v=5">
-  <link rel="stylesheet" href="css/layout.css?v=6">
-  <link rel="stylesheet" href="css/nav.css?v=6">
+  <link rel="stylesheet" href="css/tokens.css?v=14">
+  <link rel="stylesheet" href="css/glass.css?v=14">
+  <link rel="stylesheet" href="css/layout.css?v=14">
+  <link rel="stylesheet" href="css/nav.css?v=14">
 
   <!-- Screen Stylesheets -->
-  <link rel="stylesheet" href="css/screens/landing.css?v=5">
-  <link rel="stylesheet" href="css/screens/dashboard.css?v=5">
-  <link rel="stylesheet" href="css/screens/map.css?v=5">
-  <link rel="stylesheet" href="css/screens/node-detail.css?v=5">
-  <link rel="stylesheet" href="css/screens/incidents.css?v=5">
-  <link rel="stylesheet" href="css/screens/routing.css?v=5">
-  <link rel="stylesheet" href="css/screens/model-health.css?v=5">
-  <link rel="stylesheet" href="css/screens/about.css?v=5">
+  <link rel="stylesheet" href="css/screens/landing.css?v=14">
+  <link rel="stylesheet" href="css/screens/dashboard.css?v=14">
+  <link rel="stylesheet" href="css/screens/map.css?v=14">
+  <link rel="stylesheet" href="css/screens/node-detail.css?v=14">
+  <link rel="stylesheet" href="css/screens/incidents.css?v=14">
+  <link rel="stylesheet" href="css/screens/routing.css?v=14">
+  <link rel="stylesheet" href="css/screens/model-health.css?v=14">
+  <link rel="stylesheet" href="css/screens/about.css?v=14">
 </head>
 <body>
 
@@ -191,23 +191,23 @@
   <!-- Bulletproof Application Bootstrap with Visible Crash Diagnostics -->
   <script type="module">
     const moduleList = [
-      ['Sim Engine', './js/sim.js?v=10'],
-      ['Water Canvas', './js/components/waterCanvas.js?v=10'],
-      ['Navigation', './js/components/nav.js?v=10'],
-      ['Demo Controls', './js/components/demoControls.js?v=10'],
-      ['Risk Gauge', './js/components/riskGauge.js?v=10'],
-      ['Alert Feed', './js/components/alertFeed.js?v=10'],
-      ['Bottom Sheet', './js/components/bottomSheet.js?v=10'],
-      ['Camera Feed', './js/components/cameraFeed.js?v=10'],
-      ['Screen: Landing', './js/screens/landing.js?v=10'],
-      ['Screen: Dashboard', './js/screens/dashboard.js?v=10'],
-      ['Screen: Map', './js/screens/map.js?v=10'],
-      ['Screen: Node Detail', './js/screens/nodeDetail.js?v=10'],
-      ['Screen: Incidents', './js/screens/incidents.js?v=10'],
-      ['Screen: Routing', './js/screens/routing.js?v=10'],
-      ['Screen: Model Health', './js/screens/modelHealth.js?v=10'],
-      ['Screen: About', './js/screens/about.js?v=11'],
-      ['Client Router', './js/router.js?v=10']
+      ['Sim Engine', './js/sim.js?v=14'],
+      ['Water Canvas', './js/components/waterCanvas.js?v=14'],
+      ['Navigation', './js/components/nav.js?v=14'],
+      ['Demo Controls', './js/components/demoControls.js?v=14'],
+      ['Risk Gauge', './js/components/riskGauge.js?v=14'],
+      ['Alert Feed', './js/components/alertFeed.js?v=14'],
+      ['Bottom Sheet', './js/components/bottomSheet.js?v=14'],
+      ['Camera Feed', './js/components/cameraFeed.js?v=14'],
+      ['Screen: Landing', './js/screens/landing.js?v=14'],
+      ['Screen: Dashboard', './js/screens/dashboard.js?v=14'],
+      ['Screen: Map', './js/screens/map.js?v=14'],
+      ['Screen: Node Detail', './js/screens/nodeDetail.js?v=14'],
+      ['Screen: Incidents', './js/screens/incidents.js?v=14'],
+      ['Screen: Routing', './js/screens/routing.js?v=14'],
+      ['Screen: Model Health', './js/screens/modelHealth.js?v=14'],
+      ['Screen: About', './js/screens/about.js?v=14'],
+      ['Client Router', './js/router.js?v=14']
     ];
 
     function displayCrash(title, msg, stack) {
@@ -240,11 +240,11 @@
 
       // 2. Initialize application components
       try {
-        const { sim } = await import('./js/sim.js?v=10');
-        const { NavigationComponent } = await import('./js/components/nav.js?v=10');
-        const { DemoControlsComponent } = await import('./js/components/demoControls.js?v=10');
-        const { WaterCanvas } = await import('./js/components/waterCanvas.js?v=10');
-        const { Router } = await import('./js/router.js?v=10');
+        const { sim } = await import('./js/sim.js?v=14');
+        const { NavigationComponent } = await import('./js/components/nav.js?v=14');
+        const { DemoControlsComponent } = await import('./js/components/demoControls.js?v=14');
+        const { WaterCanvas } = await import('./js/components/waterCanvas.js?v=14');
+        const { Router } = await import('./js/router.js?v=14');
 
         try {
           new WaterCanvas('ambient-canvas');

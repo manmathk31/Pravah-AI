@@ -3,14 +3,14 @@
  * Lightweight hash-based view router with parameter parsing and screen lifecycle management.
  */
 
-import { renderLanding } from './screens/landing.js?v=9';
-import { renderDashboard } from './screens/dashboard.js?v=9';
-import { renderMap } from './screens/map.js?v=9';
-import { renderNodeDetail } from './screens/nodeDetail.js?v=9';
-import { renderIncidents } from './screens/incidents.js?v=9';
-import { renderRouting } from './screens/routing.js?v=9';
-import { renderModelHealth } from './screens/modelHealth.js?v=9';
-import { renderAbout } from './screens/about.js?v=11';
+import { renderLanding } from './screens/landing.js?v=14';
+import { renderDashboard } from './screens/dashboard.js?v=14';
+import { renderMap } from './screens/map.js?v=14';
+import { renderNodeDetail } from './screens/nodeDetail.js?v=14';
+import { renderIncidents } from './screens/incidents.js?v=14';
+import { renderRouting } from './screens/routing.js?v=14';
+import { renderModelHealth } from './screens/modelHealth.js?v=14';
+import { renderAbout } from './screens/about.js?v=14';
 
 export class Router {
   constructor(mountContainerEl, navComponent) {
@@ -60,6 +60,9 @@ export class Router {
 
     // Update navigation active states
     this.nav?.setActiveRoute(window.location.hash || '#landing');
+
+    // Toggle route-specific body classes (e.g. route-map prevents floating elements from overlapping canvas)
+    document.body.classList.toggle('route-map', routeName === 'map');
 
     const executeRender = () => {
       try {

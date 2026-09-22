@@ -4,14 +4,16 @@
    ========================================================================== */
 
 :root {
-  /* Dark Oceanic Atmosphere — Comfortable, Deep & Reassuring */
-  --bg-dark-base: #050a12;
-  --bg-dark-surface: #08121f;
-  --bg-dark-card: #0c1a2c;
-  --bg-dark-elevated: #112338;
-  --bg-dark-highlight: #17304d;
-  --bg-gradient: radial-gradient(ellipse at 50% -20%, #0f2b48 0%, #081422 55%, #04080f 100%);
-  --bg-mesh-glow: radial-gradient(circle at 85% 15%, rgba(14, 165, 233, 0.1) 0%, transparent 60%);
+  
+  /* Refined Greyish Atmosphere — Comfortable, Modern Slate Grey & Cyber-Civic */
+
+  --bg-dark-base: #141922;
+  --bg-dark-surface: #1a222e;
+  --bg-dark-card: #212a39;
+  --bg-dark-elevated: #273447;
+  --bg-dark-highlight: #314259;
+  --bg-gradient: radial-gradient(ellipse at 50% -20%, #243449 0%, #171f2b 55%, #121720 100%);
+  --bg-mesh-glow: radial-gradient(circle at 85% 15%, rgba(14, 165, 233, 0.12) 0%, transparent 60%);
 
   /* High-Tech Accents — Cyan & Deep Ocean Blues */
   --accent-cyan: #38bdf8;
@@ -51,13 +53,13 @@
   --text-dim: #4b617a;
   --text-white: #ffffff;
 
-  /* Frosted Dark Glass Surfaces */
-  --glass-bg: rgba(12, 24, 38, 0.7);
-  --glass-bg-hover: rgba(16, 32, 50, 0.85);
-  --glass-bg-elevated: rgba(15, 30, 48, 0.88);
-  --glass-bg-card: rgba(11, 23, 36, 0.65);
-  --glass-border: rgba(56, 189, 248, 0.14);
-  --glass-border-hover: rgba(56, 189, 248, 0.45);
+  /* Frosted Greyish Glass Surfaces */
+  --glass-bg: rgba(26, 35, 48, 0.78);
+  --glass-bg-hover: rgba(33, 45, 62, 0.9);
+  --glass-bg-elevated: rgba(30, 42, 58, 0.94);
+  --glass-bg-card: rgba(24, 34, 47, 0.75);
+  --glass-border: rgba(56, 189, 248, 0.18);
+  --glass-border-hover: rgba(56, 189, 248, 0.48);
   --glass-border-subtle: rgba(255, 255, 255, 0.08);
   --glass-highlight: inset 0 1px 1px 0 rgba(255, 255, 255, 0.12);
   --glass-blur: 24px;

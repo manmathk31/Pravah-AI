@@ -15,25 +15,49 @@ let unsubscribeTick = null;
 let unsubscribeScenario = null;
 let heatmapCircleGroup = null;
 let heatmapVisible = true;
+let currentBasemapMode = 'slate';
+let activeTileLayers = [];
 
 export function renderMap(container) {
   container.innerHTML = `
     <div class="map-page-container">
-      <div id="leaflet-map"></div>
+      <div id="leaflet-map" class="view-slate"></div>
 
       <!-- Top Floating HUD -->
       <div class="map-hud-top">
         <div class="map-hud-controls">
-          <div class="map-hud-pill">
-            <span class="live-beacon-dot"></span>
-            <span>LIVE FLOOD STATIONS</span>
+          <div class="map-hud-row">
+            <div class="map-hud-pill">
+              <span class="live-beacon-dot"></span>
+              <span>LIVE FLOOD STATIONS</span>
+            </div>
+
+            <!-- Lightweight Basemap Mode Switcher (Zero extra libraries) -->
+            <div class="map-view-switcher" role="group" aria-label="Map Basemap Style">
+              <button type="button" class="map-view-btn active" data-view-mode="slate" title="Slate Gray Basemap (Default)">
+                <span class="view-icon">🗺️</span>
+                <span>Slate</span>
+              </button>
+              <button type="button" class="map-view-btn" data-view-mode="satellite" title="Satellite Imagery">
+                <span class="view-icon">🛰️</span>
+                <span>Satellite</span>
+              </button>
+              <button type="button" class="map-view-btn" data-view-mode="contrast" title="High Contrast Tactical View">
+                <span class="view-icon">⚡</span>
+                <span>High Contrast</span>
+              </button>
+            </div>
           </div>
+
           <div id="route-advisory-pill" class="map-hud-pill status-pill-safe" style="border-radius: var(--radius-sm);">
             NORMAL ROUTE: Lowland Causeway is Clear & Dry
           </div>
         </div>
 
         <div class="map-mobile-action-bar">
+          <button id="mobile-toggle-view" class="map-tool-icon-btn" title="Cycle Basemap Style">
+            VIEW
+          </button>
           <button id="mobile-toggle-legend" class="map-tool-icon-btn" title="Toggle Legend">
             MAP
           </button>
@@ -109,6 +133,22 @@ export function renderMap(container) {
 
   bottomSheet = new BottomSheetComponent();
 
+  // Desktop Basemap Switcher buttons
+  container.querySelectorAll('.map-view-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const mode = e.currentTarget.dataset.viewMode;
+      if (mode) setBasemapMode(mode);
+    });
+  });
+
+  // Mobile Basemap cycle button
+  const mobViewBtn = container.querySelector('#mobile-toggle-view');
+  mobViewBtn?.addEventListener('click', () => {
+    const modes = ['slate', 'satellite', 'contrast'];
+    const nextIdx = (modes.indexOf(currentBasemapMode) + 1) % modes.length;
+    setBasemapMode(modes[nextIdx]);
+  });
+
   const mobLegendBtn = container.querySelector('#mobile-toggle-legend');
   const legendCard = container.querySelector('#map-legend');
   mobLegendBtn?.addEventListener('click', () => {
@@ -135,6 +175,92 @@ export function renderMap(container) {
   });
 }
 
+function setBasemapMode(mode) {
+  if (!leafletMap) return;
+  currentBasemapMode = mode;
+
+  // 1. Clean up existing tile layers
+  activeTileLayers.forEach(layer => {
+    try { leafletMap.removeLayer(layer); } catch (e) {}
+  });
+  activeTileLayers = [];
+
+  // 2. Toggle visual mode classes on map container
+  const mapContainer = document.getElementById('leaflet-map');
+  if (mapContainer) {
+    mapContainer.classList.remove('view-slate', 'view-satellite', 'view-contrast');
+    mapContainer.classList.add(`view-${mode}`);
+  }
+
+  // 3. Load on-demand lightweight basemap tiles
+  if (mode === 'satellite') {
+    // Esri High-Resolution World Imagery (100% Free, no watermark, fast worldwide CDN)
+    const satBase = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+      attribution: '&copy; Esri, Maxar, Earthstar Geographics',
+      maxNativeZoom: 18,
+      maxZoom: 19
+    });
+    const satLabels = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}', {
+      attribution: '',
+      maxNativeZoom: 18,
+      maxZoom: 19,
+      opacity: 0.95
+    });
+    satBase.addTo(leafletMap);
+    satLabels.addTo(leafletMap);
+    activeTileLayers.push(satBase, satLabels);
+  } else if (mode === 'contrast') {
+    // High Contrast Tactical View: Crisp OSM road vectors with high-contrast tactical styling
+    const contrastBase = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors',
+      maxZoom: 19
+    });
+    contrastBase.addTo(leafletMap);
+    activeTileLayers.push(contrastBase);
+  } else {
+    // Default Slate Gray: Esri ArcGIS World Dark Gray Base & Reference (Free, watermark-free, slate-grey)
+    const cartoApiKey = window.PRAVAH_CARTO_KEY || localStorage.getItem('carto_api_key');
+    if (cartoApiKey) {
+      const cartoLayer = L.tileLayer(`https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png?api_key=${encodeURIComponent(cartoApiKey)}`, {
+        attribution: '&copy; CARTO, OpenStreetMap',
+        subdomains: 'abcd',
+        maxZoom: 19
+      });
+      cartoLayer.addTo(leafletMap);
+      activeTileLayers.push(cartoLayer);
+    } else {
+      const grayBase = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+        attribution: '&copy; <a href="https://www.esri.com/" target="_blank" rel="noopener">Esri</a>, HERE, Garmin, &copy; OpenStreetMap',
+        maxNativeZoom: 16,
+        maxZoom: 19
+      });
+      const grayRef = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Reference/MapServer/tile/{z}/{y}/{x}', {
+        attribution: '',
+        maxNativeZoom: 16,
+        maxZoom: 19,
+        opacity: 0.95
+      });
+      grayBase.addTo(leafletMap);
+      grayRef.addTo(leafletMap);
+      activeTileLayers.push(grayBase, grayRef);
+    }
+  }
+
+  // 4. Ensure routes and pins are stacked cleanly above tiles
+  if (directRouteLine) directRouteLine.bringToFront();
+  if (safeRouteLine) safeRouteLine.bringToFront();
+
+  // 5. Update UI active button indicators
+  document.querySelectorAll('.map-view-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.viewMode === mode);
+  });
+
+  const mobViewBtn = document.getElementById('mobile-toggle-view');
+  if (mobViewBtn) {
+    mobViewBtn.textContent = mode.toUpperCase().slice(0, 4);
+  }
+}
+
 function initLeaflet() {
   const mapMount = document.getElementById('leaflet-map');
   if (!mapMount || typeof L === 'undefined') return;
@@ -152,11 +278,20 @@ function initLeaflet() {
 
   L.control.zoom({ position: 'bottomright' }).addTo(leafletMap);
 
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-    attribution: '&copy; CARTO, OpenStreetMap',
-    subdomains: 'abcd',
-    maxZoom: 19
-  }).addTo(leafletMap);
+  // Initialize selected basemap
+  setBasemapMode(currentBasemapMode);
+
+  // Global helper if the user wants to set a CARTO API key from the browser console
+  window.setPravahCartoKey = (key) => {
+    if (key) {
+      localStorage.setItem('carto_api_key', key);
+      window.PRAVAH_CARTO_KEY = key;
+    } else {
+      localStorage.removeItem('carto_api_key');
+      delete window.PRAVAH_CARTO_KEY;
+    }
+    setBasemapMode(currentBasemapMode);
+  };
 
   initPolylines();
   initRiskHeatmap();

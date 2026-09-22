@@ -216,28 +216,23 @@ export class DemoControlsComponent {
       }
       .demo-modal {
         position: fixed;
-        bottom: calc(76px + env(safe-area-inset-bottom));
-        right: 16px;
-        max-width: 380px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -46%) scale(0.96);
+        max-width: 440px;
         width: calc(100vw - 32px);
         z-index: 501;
-        padding: 20px;
-        transform: translateY(15px) scale(0.96);
+        padding: 22px;
         opacity: 0;
         visibility: hidden;
         transition: all var(--transition-base);
-        background: rgba(10, 20, 32, 0.95);
+        background: rgba(20, 27, 38, 0.97);
         border: 1px solid rgba(56, 189, 248, 0.35);
-        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 30px rgba(2, 132, 199, 0.25);
-      }
-      @media (min-width: 1024px) {
-        .demo-modal {
-          bottom: 76px;
-          right: 24px;
-        }
+        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 35px rgba(2, 132, 199, 0.25);
+        border-radius: var(--radius-lg);
       }
       .demo-modal.open {
-        transform: translateY(0) scale(1);
+        transform: translate(-50%, -50%) scale(1);
         opacity: 1;
         visibility: visible;
       }
@@ -254,9 +249,9 @@ export class DemoControlsComponent {
   }
 
   initListeners() {
-    this.fabEl.addEventListener('click', () => this.toggleModal());
-    this.closeBtn.addEventListener('click', () => this.closeModal());
-    this.overlayEl.addEventListener('click', () => this.closeModal());
+    this.fabEl?.addEventListener('click', () => this.toggleModal());
+    this.closeBtn?.addEventListener('click', () => this.closeModal());
+    this.overlayEl?.addEventListener('click', () => this.closeModal());
 
     this.triggerFloodBtn.addEventListener('click', () => {
       sim.triggerFloodScenario();
